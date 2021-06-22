@@ -32,14 +32,14 @@ class JobService(
         val principal = principal()
         return repository
             .findById(dto.id)
-            .orElse(JobEntity.fromDto(dto, principal.id))
-            .let {
+            .ifPresent {
                 if (it.user.id != principal.id) {
                     throw PermissionDeniedException()
                 }
-                if (it.id == 0L) repository.save(it)
-                it
-            }.toDto(principal.id)
+            }
+            .let { JobEntity.fromDto(dto, principal.id) }
+            .let(repository::save)
+            .toDto(principal.id)
     }
 
     fun removeById(id: Long): Unit {
