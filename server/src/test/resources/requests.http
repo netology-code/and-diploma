@@ -121,7 +121,10 @@ Content-Type: application/json
   "authorAvatar": "",
   "content": "Red Square",
   "published": 0,
-  "coords": [55.751999, 37.617734],
+  "coords": {
+    "lat": 55.751999,
+    "long": 37.617734
+  },
   "attachment": {
     "url": "netology.jpg",
     "type": "IMAGE"
@@ -159,7 +162,10 @@ Content-Type: application/json
   "author": "",
   "authorAvatar": "",
   "content": "Red Square (updated)",
-  "coords": [55.751999, 37.617734],
+  "coords": {
+    "lat": 55.751999,
+    "long": 37.617734
+  },
   "attachment": {
     "url": "netology.jpg",
     "type": "IMAGE"
@@ -257,7 +263,10 @@ Content-Type: application/json
   "authorAvatar": "",
   "content": "Red Square",
   "published": 0,
-  "coords": [55.751999, 37.617734],
+  "coords": {
+    "lat": 55.751999,
+    "long": 37.617734
+  },
   "attachment": {
     "url": "netology.jpg",
     "type": "IMAGE"

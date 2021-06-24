@@ -5,6 +5,7 @@ import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import ru.netology.nework.dto.Post
+import ru.netology.nework.entity.CoordinatesEmbeddable
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.exception.NotFoundException
 import ru.netology.nework.exception.PermissionDeniedException
@@ -163,7 +164,7 @@ class PostService(
 
                 it.run {
                     content = dto.content
-                    coords = dto.coords
+                    coords = dto.coords?.let(CoordinatesEmbeddable::fromCoordinates)
                     link = dto.link
                     mentionIds = dto.mentionIds.toMutableSet()
                 }

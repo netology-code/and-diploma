@@ -15,7 +15,8 @@ data class PostEntity(
     /**
      * Координаты
      */
-    var coords: Pair<Double, Double>? = null,
+    @Embedded
+    var coords: CoordinatesEmbeddable? = null,
     /**
      * Ссылка на связанный ресурс, например, событие (/events/{id}) или пользователя (/users/{id})
      */
@@ -36,32 +37,32 @@ data class PostEntity(
     constructor(id: Long) : this(id, UserEntity(0), "", 0L)
 
     fun toDto(myId: Long) = Post(
-        id,
-        author.id,
-        author.name,
-        author.avatar,
-        content,
-        published,
-        coords,
-        link,
-        mentionIds,
-        mentionIds.contains(myId),
-        likeOwnerIds,
-        likeOwnerIds.contains(myId),
-        attachment?.toDto()
+        id = id,
+        authorId = author.id,
+        author = author.name,
+        authorAvatar = author.avatar,
+        content = content,
+        published = published,
+        coords = coords?.toCoordinates(),
+        link = link,
+        mentionIds = mentionIds,
+        mentionedMe = mentionIds.contains(myId),
+        likeOwnerIds = likeOwnerIds,
+        likedByMe = likeOwnerIds.contains(myId),
+        attachment = attachment?.toDto()
     )
 
     companion object {
         fun fromDto(dto: Post) = PostEntity(
-            dto.id,
-            UserEntity(dto.authorId),
-            dto.content,
-            dto.published,
-            dto.coords,
-            dto.link,
-            dto.mentionIds.toMutableSet(),
-            mutableSetOf(),
-            AttachmentEmbeddable.fromDto(dto.attachment),
+            id = dto.id,
+            author = UserEntity(dto.authorId),
+            content = dto.content,
+            published = dto.published,
+            coords = dto.coords?.let(CoordinatesEmbeddable::fromCoordinates),
+            link = dto.link,
+            mentionIds = dto.mentionIds.toMutableSet(),
+            likeOwnerIds = mutableSetOf(),
+            attachment = AttachmentEmbeddable.fromDto(dto.attachment),
         )
     }
 }

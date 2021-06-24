@@ -1,11 +1,5 @@
 package ru.netology.nework.dto
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.google.firestore.v1.DocumentOrBuilder
-import ru.netology.nework.serialization.CoordsDeserializer
-import ru.netology.nework.serialization.CoordsSerializer
-
 data class Post(
     val id: Long,
     val authorId: Long,
@@ -16,9 +10,7 @@ data class Post(
     /**
      * Координаты
      */
-    @JsonSerialize(using = CoordsSerializer::class)
-    @JsonDeserialize(using = CoordsDeserializer::class)
-    val coords: Pair<Double, Double>? = null,
+    val coords: Coordinates? = null,
     /**
      * Ссылка на связанный ресурс, например:
      * 1. событие (/events/{id})
