@@ -21,7 +21,8 @@ data class EventEntity(
     /**
      * Координаты проведения
      */
-    var coords: Pair<Double, Double>? = null,
+    @Embedded
+    var coords: CoordinatesEmbeddable? = null,
     /**
      * Типы события
      */
@@ -46,7 +47,23 @@ data class EventEntity(
     @Embedded
     var attachment: AttachmentEmbeddable? = null,
 ) {
-    fun toDto(myId: Long) = Event(id, author.id, author.name, author.avatar, content, datetime, published, coords, type, likeOwnerIds, likeOwnerIds.contains(myId), speakerIds, participantsIds, participantsIds.contains(myId), attachment?.toDto())
+    fun toDto(myId: Long) = Event(
+        id = id,
+        authorId = author.id,
+        author = author.name,
+        authorAvatar = author.avatar,
+        content = content,
+        datetime = datetime,
+        published = published,
+        coords = coords?.toCoordinates(),
+        type = type,
+        likeOwnerIds = likeOwnerIds,
+        likedByMe = likeOwnerIds.contains(myId),
+        speakerIds = speakerIds,
+        participantsIds = participantsIds,
+        participatedByMe = participantsIds.contains(myId),
+        attachment = attachment?.toDto()
+    )
 
     companion object {
         fun fromDto(dto: Event) = EventEntity(
@@ -55,7 +72,7 @@ data class EventEntity(
             dto.content,
             dto.datetime,
             dto.published,
-            dto.coords,
+            dto.coords?.let(CoordinatesEmbeddable::fromCoordinates),
             dto.type,
             mutableSetOf(),
             dto.speakerIds.toMutableSet(),

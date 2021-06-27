@@ -7,6 +7,7 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.util.ResourceUtils
 import ru.netology.nework.dto.Attachment
+import ru.netology.nework.dto.Coordinates
 import ru.netology.nework.dto.Event
 import ru.netology.nework.dto.Post
 import ru.netology.nework.enumeration.AttachmentType
@@ -30,11 +31,13 @@ class NeWorkApplication {
             true,
         )
 
-        val netology = userService.create(login = "netology", pass = "secret", name = "Netology", avatar = "netology.jpg")
+        val netology =
+            userService.create(login = "netology", pass = "secret", name = "Netology", avatar = "netology.jpg")
         val sber = userService.create(login = "sber", pass = "secret", name = "Сбер", avatar = "sber.jpg")
         val tcs = userService.create(login = "tcs", pass = "secret", name = "Тинькофф", avatar = "tcs.jpg")
         val got = userService.create(login = "got", pass = "secret", name = "Game of Thrones", avatar = "got.jpg")
-        val soundhelix = userService.create(login = "soundhelix", pass = "secret", name = "Sound Helix", avatar = "soundhelix.png")
+        val soundhelix =
+            userService.create(login = "soundhelix", pass = "secret", name = "Sound Helix", avatar = "soundhelix.png")
         val student = userService.create(login = "student", pass = "secret", name = "Студент", avatar = "netology.jpg")
 
         userService.saveInitialToken(student.id, "x-token")
@@ -65,7 +68,7 @@ class NeWorkApplication {
                 content = "Встреча в главном офисе СберБанка",
                 datetime = OffsetDateTime.now().plusMonths(1).toEpochSecond(),
                 published = 0,
-                coords = 55.77391788231168 to 37.60555493068535 ,
+                coords = Coordinates(55.77391788231168, 37.60555493068535),
                 type = EventType.OFFLINE,
                 speakerIds = setOf(netology.id, student.id),
                 attachment = Attachment(
@@ -178,7 +181,7 @@ class NeWorkApplication {
                 link = "/events/${firstEvent.id}",
             )
         )
-        val ninth= postService.saveInitial(
+        val ninth = postService.saveInitial(
             Post(
                 id = 0,
                 authorId = netology.id,

@@ -16,7 +16,7 @@ data class Event(
     /**
      * Координаты проведения
      */
-    val coords: Pair<Double, Double>? = null,
+    val coords: Coordinates? = null,
     /**
      * Типы события
      */

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import ru.netology.nework.dto.Event
+import ru.netology.nework.entity.CoordinatesEmbeddable
 import ru.netology.nework.entity.EventEntity
 import ru.netology.nework.exception.NotFoundException
 import ru.netology.nework.exception.PermissionDeniedException
@@ -104,17 +105,17 @@ class EventService(
                     throw PermissionDeniedException()
                 }
 
-                it.run {
-                    content = dto.content
-                    coords = dto.coords
-                    speakerIds = dto.speakerIds.toMutableSet()
-                }
-                if (it.id == 0L) repository.save(it)
-                it
+                it.copy(
+                    type = dto.type,
+                    datetime = dto.datetime,
+                    content = dto.content,
+                    coords = dto.coords?.let(CoordinatesEmbeddable::fromCoordinates),
+                    speakerIds = dto.speakerIds.toMutableSet(),
+                ).also(repository::save)
             }.toDto(principal.id)
     }
 
-    fun removeById(id: Long): Unit {
+    fun removeById(id: Long) {
         val principal = principal()
         repository.findById(id)
             .orElseThrow(::NotFoundException)
