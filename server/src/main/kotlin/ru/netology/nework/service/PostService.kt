@@ -5,6 +5,7 @@ import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import ru.netology.nework.dto.Post
+import ru.netology.nework.entity.AttachmentEmbeddable
 import ru.netology.nework.entity.CoordinatesEmbeddable
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.exception.NotFoundException
@@ -167,6 +168,7 @@ class PostService(
                     coords = dto.coords?.let(CoordinatesEmbeddable::fromCoordinates)
                     link = dto.link
                     mentionIds = dto.mentionIds.toMutableSet()
+                    attachment = AttachmentEmbeddable.fromDto(dto.attachment)
                 }
                 if (it.id == 0L) repository.save(it)
                 it
