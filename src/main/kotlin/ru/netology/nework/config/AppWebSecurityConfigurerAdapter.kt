@@ -3,6 +3,7 @@ package ru.netology.nework.config
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Lazy
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
@@ -20,6 +21,7 @@ import ru.netology.nework.service.UserService
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class AppWebSecurityConfigurerAdapter : WebSecurityConfigurerAdapter() {
+    @Lazy
     @Autowired
     lateinit var userService: UserService
 
