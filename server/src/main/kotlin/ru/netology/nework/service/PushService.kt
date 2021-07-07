@@ -11,16 +11,16 @@ import javax.transaction.Transactional
 @Service
 @Transactional
 class PushService(
-    private val messaging: FirebaseMessaging,
+    //private val messaging: FirebaseMessaging,
     private val pushTokenRepository: PushTokenRepository,
     private val objectMapper: ObjectMapper,
 ) {
-    fun send(token: String, message: PushMessage) {
+    /*fun send(token: String, message: PushMessage) {
         messaging.send(
             Message.builder()
                 .putData("content", objectMapper.writeValueAsString(message))
                 .setToken(token)
                 .build()
         )
-    }
+    }*/
 }

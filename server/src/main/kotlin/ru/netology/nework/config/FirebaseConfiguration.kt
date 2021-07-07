@@ -6,12 +6,11 @@ import com.google.firebase.FirebaseOptions
 import com.google.firebase.messaging.FirebaseMessaging
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import ru.netology.nework.dbUrl
 import java.io.FileInputStream
 
 @Configuration
 class FirebaseConfiguration {
-    @Bean
+    /*@Bean
     fun firebaseApp(): FirebaseApp =
         FirebaseApp.initializeApp(
             FirebaseOptions.builder()
@@ -22,5 +21,5 @@ class FirebaseConfiguration {
 
     @Bean
     fun firebaseMessaging(firebaseApp: FirebaseApp): FirebaseMessaging =
-        FirebaseMessaging.getInstance(firebaseApp)
+        FirebaseMessaging.getInstance(firebaseApp)*/
 }
