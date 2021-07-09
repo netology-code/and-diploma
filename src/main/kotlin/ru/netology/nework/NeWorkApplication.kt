@@ -15,6 +15,9 @@ import ru.netology.nework.enumeration.EventType
 import ru.netology.nework.service.EventService
 import ru.netology.nework.service.PostService
 import ru.netology.nework.service.UserService
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.StandardCopyOption
 import java.time.OffsetDateTime
 
 @SpringBootApplication
@@ -26,10 +29,16 @@ class NeWorkApplication {
         eventService: EventService,
         @Value("\${app.media-location}") mediaLocation: String,
     ) = CommandLineRunner {
-        ResourceUtils.getFile("classpath:static").copyRecursively(
-            ResourceUtils.getFile(mediaLocation),
-            true,
-        )
+        val path = Path.of(ResourceUtils.getURL("classpath:static").toURI())
+        val target = Path.of(mediaLocation)
+        Files.createDirectories(target)
+        Files.walk(path).filter {
+            Files.isRegularFile(it)
+        }.forEach {
+            val newLocation = target.resolve(path.relativize(it))
+            Files.createDirectories(newLocation.parent)
+            Files.copy(it, newLocation, StandardCopyOption.REPLACE_EXISTING)
+        }
 
         val netology =
             userService.create(login = "netology", pass = "secret", name = "Netology", avatar = "netology.jpg")
