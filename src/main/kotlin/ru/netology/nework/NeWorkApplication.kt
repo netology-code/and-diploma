@@ -16,7 +16,7 @@ import ru.netology.nework.service.EventService
 import ru.netology.nework.service.PostService
 import ru.netology.nework.service.UserService
 import java.nio.file.Files
-import java.nio.file.Path
+import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 import java.time.OffsetDateTime
 
@@ -29,8 +29,8 @@ class NeWorkApplication {
         eventService: EventService,
         @Value("\${app.media-location}") mediaLocation: String,
     ) = CommandLineRunner {
-        val path = Path.of(ResourceUtils.getURL("classpath:static").toURI())
-        val target = Path.of(mediaLocation)
+        val path = Paths.get(ResourceUtils.getURL("classpath:static").toURI())
+        val target = Paths.get(mediaLocation)
         Files.createDirectories(target)
         Files.walk(path).filter {
             Files.isRegularFile(it)

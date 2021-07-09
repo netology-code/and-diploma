@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import ru.netology.nework.dto.Media
-import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.*
 
 @Service
 class MediaService(@Value("\${app.media-location}") private val mediaLocation: String) {
-    private val path = Path.of(mediaLocation)
+    private val path = Paths.get(mediaLocation)
 
     fun saveMedia(file: MultipartFile): Media = save("media", file)
 
