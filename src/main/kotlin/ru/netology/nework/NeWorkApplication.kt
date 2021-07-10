@@ -5,7 +5,6 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
-import org.springframework.util.ResourceUtils
 import ru.netology.nework.dto.Attachment
 import ru.netology.nework.dto.Coordinates
 import ru.netology.nework.dto.Event
@@ -17,7 +16,6 @@ import ru.netology.nework.service.PostService
 import ru.netology.nework.service.UserService
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.nio.file.StandardCopyOption
 import java.time.OffsetDateTime
 
 @SpringBootApplication
@@ -29,22 +27,14 @@ class NeWorkApplication {
         eventService: EventService,
         @Value("\${app.media-location}") mediaLocation: String,
     ) = CommandLineRunner {
-        val path = Paths.get(ResourceUtils.getURL("classpath:static").toURI())
-        val target = Paths.get(mediaLocation)
-        Files.createDirectories(target)
-        Files.walk(path).filter {
-            Files.isRegularFile(it)
-        }.forEach {
-            val newLocation = target.resolve(path.relativize(it))
-            Files.createDirectories(newLocation.parent)
-            Files.copy(it, newLocation, StandardCopyOption.REPLACE_EXISTING)
-        }
+        Paths.get(mediaLocation)
+            .also(Files::createDirectories)
 
         val netology =
             userService.create(login = "netology", pass = "secret", name = "Netology", avatar = "netology.jpg")
         val sber = userService.create(login = "sber", pass = "secret", name = "Сбер", avatar = "sber.jpg")
         val tcs = userService.create(login = "tcs", pass = "secret", name = "Тинькофф", avatar = "tcs.jpg")
-        val got = userService.create(login = "got", pass = "secret", name = "Game of Thrones", avatar = "got.jpg")
+        userService.create(login = "got", pass = "secret", name = "Game of Thrones", avatar = "got.jpg")
         val soundhelix =
             userService.create(login = "soundhelix", pass = "secret", name = "Sound Helix", avatar = "soundhelix.png")
         val student = userService.create(login = "student", pass = "secret", name = "Студент", avatar = "netology.jpg")
@@ -68,7 +58,7 @@ class NeWorkApplication {
                 )
             )
         )
-        val secondEvent = eventService.saveInitial(
+        eventService.saveInitial(
             Event(
                 id = 0,
                 authorId = sber.id,
@@ -87,7 +77,7 @@ class NeWorkApplication {
             )
         )
 
-        val firstPost = postService.saveInitial(
+        postService.saveInitial(
             Post(
                 id = 0,
                 authorId = netology.id,
@@ -102,7 +92,7 @@ class NeWorkApplication {
                 )
             )
         )
-        val secondPost = postService.saveInitial(
+        postService.saveInitial(
             Post(
                 id = 0,
                 authorId = sber.id,
@@ -112,7 +102,7 @@ class NeWorkApplication {
                 published = 0,
             )
         )
-        val thirdPost = postService.saveInitial(
+        postService.saveInitial(
             Post(
                 id = 0,
                 authorId = tcs.id,
@@ -122,7 +112,7 @@ class NeWorkApplication {
                 published = 0,
             )
         )
-        val fourthPost = postService.saveInitial(
+        postService.saveInitial(
             Post(
                 id = 0,
                 authorId = netology.id,
@@ -136,7 +126,7 @@ class NeWorkApplication {
                 ),
             )
         )
-        val fifthPost = postService.saveInitial(
+        postService.saveInitial(
             Post(
                 id = 0,
                 authorId = sber.id,
@@ -150,7 +140,7 @@ class NeWorkApplication {
                 ),
             )
         )
-        val sixthPost = postService.saveInitial(
+        postService.saveInitial(
             Post(
                 id = 0,
                 authorId = soundhelix.id,
@@ -164,7 +154,7 @@ class NeWorkApplication {
                 ),
             )
         )
-        val seventhPost = postService.saveInitial(
+        postService.saveInitial(
             Post(
                 id = 0,
                 authorId = netology.id,
@@ -179,7 +169,7 @@ class NeWorkApplication {
                 ),
             )
         )
-        val eightsPost = postService.saveInitial(
+        postService.saveInitial(
             Post(
                 id = 0,
                 authorId = netology.id,
@@ -190,7 +180,7 @@ class NeWorkApplication {
                 link = "/events/${firstEvent.id}",
             )
         )
-        val ninth = postService.saveInitial(
+        postService.saveInitial(
             Post(
                 id = 0,
                 authorId = netology.id,
@@ -207,3 +197,4 @@ class NeWorkApplication {
 fun main(args: Array<String>) {
     runApplication<NeWorkApplication>(*args)
 }
+

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import ru.netology.nework.dto.Media
+import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
 
@@ -15,9 +16,14 @@ class MediaService(@Value("\${app.media-location}") private val mediaLocation: S
 
     fun saveAvatar(file: MultipartFile): Media = save("avatars", file)
 
-    fun save(folder: String, file: MultipartFile): Media {
-        val id = UUID.randomUUID().toString()
-        file.transferTo(path.resolve(Paths.get(folder, id)))
-        return Media(id)
-    }
+    fun save(folder: String, file: MultipartFile): Media =
+        UUID.randomUUID()
+            .toString()
+            .let(::Media)
+            .also { media ->
+                Paths.get(folder, media.id)
+                    .let(path::resolve)
+                    .also { Files.createDirectories(it.parent) }
+                    .also(file::transferTo)
+            }
 }

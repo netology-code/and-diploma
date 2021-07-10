@@ -6,6 +6,7 @@ import org.springframework.web.servlet.HandlerInterceptor
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import java.nio.file.Paths
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -33,6 +34,9 @@ class AppWebMvcConfigurer(@Value("\${app.media-location}") private val mediaLoca
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
         registry
             .addResourceHandler("/**")
-            .addResourceLocations(mediaLocation)
+            .addResourceLocations(
+                Paths.get(mediaLocation).toUri().toString(),
+                "classpath:/static/"
+            )
     }
 }
