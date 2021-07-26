@@ -13,5 +13,5 @@ import ru.netology.nework.service.MediaService
 class MediaController(private val service: MediaService) {
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    fun save(@RequestParam file: MultipartFile) = service.saveMedia(file)
+    fun save(@RequestParam file: MultipartFile) = service.save(file)
 }

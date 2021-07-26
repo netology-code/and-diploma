@@ -6,7 +6,7 @@ data class Event(
     val id: Long,
     val authorId: Long,
     val author: String,
-    val authorAvatar: String,
+    val authorAvatar: String?,
     val content: String,
     /**
      * Дата и время проведения

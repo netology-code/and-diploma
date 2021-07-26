@@ -1,6 +1,5 @@
 package ru.netology.nework.service
 
-import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -8,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import ru.netology.nework.dto.PushToken
 import ru.netology.nework.dto.Token
 import ru.netology.nework.dto.User
@@ -36,7 +36,7 @@ class UserService(
     fun getAll(): List<User> = userRepository.findAll()
         .map(UserEntity::toDto)
 
-    fun create(login: String, pass: String, name: String, avatar: String): User = userRepository.save(
+    fun create(login: String, pass: String, name: String, avatar: String? = null): User = userRepository.save(
         UserEntity(
             0L,
             login,
@@ -48,7 +48,7 @@ class UserService(
 
     fun register(login: String, pass: String, name: String, file: MultipartFile?): Token {
         val avatar = file?.let {
-            mediaService.saveAvatar(it)
+            mediaService.save(it)
         }
 
         return userRepository.save(
@@ -57,7 +57,8 @@ class UserService(
                 login,
                 passwordEncoder.encode(pass),
                 name,
-                avatar?.id ?: "noavatar.png",
+                avatar?.url ?:
+                    ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString() + "noavatar.png",
             )
         ).let { user ->
             val token = Token(user.id, generateToken())

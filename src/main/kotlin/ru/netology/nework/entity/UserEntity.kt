@@ -13,7 +13,7 @@ data class UserEntity(
     var login: String,
     var pass: String,
     var name: String,
-    var avatar: String,
+    var avatar: String? = null,
 ) : UserDetails {
     constructor(id: Long) : this(id, "", "", "", "")
 

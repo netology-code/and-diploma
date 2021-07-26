@@ -11,5 +11,7 @@ import ru.netology.nework.service.PushService
 @RequestMapping("/api/pushes")
 class PushController(private val service: PushService) {
     @PostMapping
-    fun send(@RequestParam token: String, @RequestBody message: PushMessage) {}
+    fun send(@RequestParam token: String, @RequestBody message: PushMessage) {
+        service.send(token, message)
+    }
 }

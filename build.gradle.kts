@@ -6,6 +6,15 @@ plugins {
     id("org.jetbrains.kotlin.plugin.jpa") version "1.5.20"
     kotlin("jvm") version "1.5.20"
     kotlin("plugin.spring") version "1.5.20"
+    id("org.flywaydb.flyway") version "5.2.4"
+}
+
+flyway {
+    url = System.getenv("SPRING_DATASOURCE_URL")
+    user = System.getenv("SPRING_DATASOURCE_USERNAME")
+    password = System.getenv("SPRING_DATASOURCE_PASSWORD")
+    baselineOnMigrate = true
+    locations = arrayOf("filesystem:resources/db/migration")
 }
 
 group = "ru.netology"
@@ -25,10 +34,13 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.google.firebase:firebase-admin:7.0.1")
+    implementation("com.cloudinary:cloudinary-http42:1.1.3")
+    runtimeOnly("org.postgresql:postgresql:42.2.23")
     runtimeOnly("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+    implementation("org.flywaydb:flyway-core:5.2.4")
 }
 
 tasks.withType<Test> {
