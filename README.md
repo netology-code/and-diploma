@@ -50,7 +50,7 @@
 <img src="https://user-images.githubusercontent.com/13727567/127230364-81df0015-4a1c-4c1c-b15f-80485b42ed5d.png" width="480"/>
 7. Найти репозиторий and-diploma и подключить его:
 <img src="https://user-images.githubusercontent.com/13727567/127229012-288f44fc-13e6-4695-a9ee-6c4a043508ee.png"/>
-8. Для того, чтобы пользовательские данные не пропадали между перезапусками сервера, необходимо перейти во вкладку Resources и ввести имя аддона postgres:
+8. Для того чтобы пользовательские данные не пропадали между перезапусками сервера, необходимо перейти во вкладку Resources и ввести имя аддона postgres:
 <img src="https://user-images.githubusercontent.com/13727567/127230698-ded55b1f-3398-44cd-b2b6-30a1d3ca3a8a.png"/>
 И подключить:
 <img src="https://user-images.githubusercontent.com/13727567/127230791-5b33d4bb-a9f5-49cb-96c9-c70f574e76cb.png" width="480"/>
