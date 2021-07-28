@@ -32,6 +32,41 @@
 И помните: в случае возникновения вопросов, вы всегда их можете задать в канале Slack.
 </details>
 
+## Разворачиваем сервер на облаке
+[Heroku](https://www.heroku.com/) - бесплатный облачный сервис для размещения серверной части. Данная платформа позволит нам разместить сервер в сети интернет и сделает его доступным для всех пользователей.
+
+Для этого необходимо сделать несколько шагов
+1. Сделайте форк данного проекта
+<img src="https://user-images.githubusercontent.com/13727567/127227297-5a90b1b6-5576-44b1-86e1-8a020c5fe55c.png"/>
+2. Пройдите регистрацию на <a href="https://www.heroku.com/">Heroku</a><br>
+3. Зайдите в <a href="https://dashboard.heroku.com/">Dashboard</a> Heroku и выберите опцию Create New App:
+<img src="https://user-images.githubusercontent.com/13727567/127228168-9017905e-00f5-4fa4-b9ba-7dd7831a3712.png"/>
+Имя проекта должно быть уникальным в рамках Heroku. Если подсвечивается не зелёным, а красным, то придумайте другое<br>
+4. После создания приложения вы попадёте на вкладку Deploy, где нужно выбрать GitHub:<br>
+<img src="https://user-images.githubusercontent.com/13727567/127228527-5117c1a0-aec0-4994-a231-61d70fb0929f.png"/>
+5. Нажать Connect to GitHub:
+<img src="https://user-images.githubusercontent.com/13727567/127229994-63203e15-a29a-48f2-b9ea-9b111cef5a3d.png"/>
+6. Авторизовать Heroku:
+<img src="https://user-images.githubusercontent.com/13727567/127230364-81df0015-4a1c-4c1c-b15f-80485b42ed5d.png" width="480"/>
+7. Найти репозиторий and-diploma и подключить его:
+<img src="https://user-images.githubusercontent.com/13727567/127229012-288f44fc-13e6-4695-a9ee-6c4a043508ee.png"/>
+8. Для того, чтобы пользовательские данные не пропадали между перезапусками сервера, необходимо перейти во вкладку Resources и ввести имя аддона postgres:
+<img src="https://user-images.githubusercontent.com/13727567/127230698-ded55b1f-3398-44cd-b2b6-30a1d3ca3a8a.png"/>
+И подключить:
+<img src="https://user-images.githubusercontent.com/13727567/127230791-5b33d4bb-a9f5-49cb-96c9-c70f574e76cb.png" width="480"/>
+9. Аналогично с изображениями - подключаем аддон Cloudinary:
+<img src="https://user-images.githubusercontent.com/13727567/127231577-73e20388-772a-4edf-9132-16d5dd97b50a.png" width="480"/>
+10. Перейдите в Dashboard Cloudinary:
+<img src="https://user-images.githubusercontent.com/13727567/127231814-18a51c0c-262c-42de-9227-485b4b8cf7d1.png"/>
+И одновременно в Settings на Heroku, нажмите Reveal Config Vars
+<br>Добавьте переменные API_KEY, API_SECRET, CLOUD_NAME и заполните их значения данными из Cloudinary:
+<img src="https://user-images.githubusercontent.com/13727567/127232813-5f871e99-6bd2-4d38-aeaf-d351b910fca2.png"/>
+12. Перейдите в Deploy на Heroku и нажмите Deploy Branch:
+<img src="https://user-images.githubusercontent.com/13727567/127233190-15a405e6-4cf1-4857-a305-4b495846f60d.png"/>
+Через несколько минут приложение будет собрано и развернуто. Чтобы узнать адрес сервера, нажмите на Open App:
+<img src="https://user-images.githubusercontent.com/13727567/127233518-69a8d001-64b8-474b-a88f-2a161cb62e1a.png"/>
+Скопируйте данный адрес и используйте его в вашем приложении в качестве BASE_URL
+
 ## Задача
 
 **Ваша ключевая задача** - разработать полностью функционирующее приложение, самостоятельно выбрав, какую часть функциональности вы реализуете (можно реализовывать не всё).
