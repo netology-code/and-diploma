@@ -34,7 +34,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.google.firebase:firebase-admin:7.0.1")
-    implementation("com.cloudinary:cloudinary-http42:1.1.3")
+    implementation("com.cloudinary:cloudinary-http42:1.29.0")
     runtimeOnly("org.postgresql:postgresql:42.2.23")
     runtimeOnly("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
