@@ -56,12 +56,7 @@
 <img src="https://user-images.githubusercontent.com/13727567/127230791-5b33d4bb-a9f5-49cb-96c9-c70f574e76cb.png" width="480"/>
 9. Аналогично с изображениями - подключаем аддон Cloudinary:
 <img src="https://user-images.githubusercontent.com/13727567/127231577-73e20388-772a-4edf-9132-16d5dd97b50a.png" width="480"/>
-10. Перейдите в Dashboard Cloudinary:
-<img src="https://user-images.githubusercontent.com/13727567/127231814-18a51c0c-262c-42de-9227-485b4b8cf7d1.png"/>
-И одновременно в Settings на Heroku, нажмите Reveal Config Vars
-<br>Добавьте переменные API_KEY, API_SECRET, CLOUD_NAME и заполните их значения данными из Cloudinary:
-<img src="https://user-images.githubusercontent.com/13727567/127232813-5f871e99-6bd2-4d38-aeaf-d351b910fca2.png"/>
-12. Перейдите в Deploy на Heroku и нажмите Deploy Branch:
+10. Перейдите в Deploy на Heroku и нажмите Deploy Branch:
 <img src="https://user-images.githubusercontent.com/13727567/127233190-15a405e6-4cf1-4857-a305-4b495846f60d.png"/>
 Через несколько минут приложение будет собрано и развернуто. Чтобы узнать адрес сервера, нажмите на Open App:
 <img src="https://user-images.githubusercontent.com/13727567/127233518-69a8d001-64b8-474b-a88f-2a161cb62e1a.png"/>
