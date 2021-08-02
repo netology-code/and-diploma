@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.jpa") version "1.5.21"
     kotlin("jvm") version "1.5.21"
     kotlin("plugin.spring") version "1.5.21"
-    id("org.flywaydb.flyway") version "7.11.4"
+    id("org.flywaydb.flyway") version "7.12.0"
 }
 
 flyway {
