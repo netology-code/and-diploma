@@ -40,7 +40,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
-    implementation("org.flywaydb:flyway-core:5.2.4")
+    implementation("org.flywaydb:flyway-core:7.12.0")
 }
 
 tasks {
