@@ -14,7 +14,9 @@ class MediaService(
 
     fun save(file: MultipartFile): Media =
             cloudinary.uploader()
-                .upload(file.bytes, emptyMap<Any?, Any?>())
+                .upload(file.bytes, mapOf(
+                    "resource_type" to "auto"
+                ))
                 .let {
                     Media(it.getValue("url").toString())
                 }
