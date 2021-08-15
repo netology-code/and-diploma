@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import ru.netology.nework.dto.PushToken
 import ru.netology.nework.dto.Token
 import ru.netology.nework.dto.User
@@ -57,8 +56,7 @@ class UserService(
                 login,
                 passwordEncoder.encode(pass),
                 name,
-                avatar?.url ?:
-                    ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString() + "noavatar.png",
+                avatar?.url,
             )
         ).let { user ->
             val token = Token(user.id, generateToken())
