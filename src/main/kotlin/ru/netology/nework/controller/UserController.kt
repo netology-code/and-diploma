@@ -3,6 +3,7 @@ package ru.netology.nework.controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import ru.netology.nework.dto.PushToken
+import ru.netology.nework.dto.User
 import ru.netology.nework.service.UserService
 
 @RestController
@@ -10,6 +11,9 @@ import ru.netology.nework.service.UserService
 class UserController(private val service: UserService) {
     @GetMapping
     fun getAll() = service.getAll()
+
+    @GetMapping("/{id:\\d+}")
+    fun getById(@PathVariable id: Long): User = service.getById(id)
 
     @PostMapping("/registration")
     fun register(

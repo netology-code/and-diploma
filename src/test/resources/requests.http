@@ -11,6 +11,17 @@ client.test("Request executed successfully", function() {
 });
 %}
 
+### Получение пользователя по id
+
+GET http://localhost:9999/api/users/{{user_id}}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.assert(response.contentType.mimeType === "application/json", "Expected 'application/json' but received '" + response.contentType.mimeType + "'");
+});
+%}
+
 ###
 ### Раздел 1. Аутентификация и регистрация
 ###

@@ -110,4 +110,11 @@ class UserService(
                 if (it.id == 0L) pushTokenRepository.save(it) else it.userId = userId
             }
     }
+
+    fun getById(id: Long): User =
+        userRepository.findById(id)
+            .takeIf { it.isPresent }
+            ?.get()
+            ?.toDto()
+            ?: throw NotFoundException()
 }
