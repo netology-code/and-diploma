@@ -11,7 +11,7 @@ import ru.netology.nework.exception.NotFoundException
 import ru.netology.nework.exception.PermissionDeniedException
 import ru.netology.nework.extensions.principal
 import ru.netology.nework.repository.EventRepository
-import java.time.OffsetDateTime
+import java.time.Instant
 import java.util.stream.Collectors
 
 @Service
@@ -96,7 +96,7 @@ class EventService(
                         authorId = principal.id,
                         author = principal.name,
                         authorAvatar = principal.avatar,
-                        published = OffsetDateTime.now().toEpochSecond()
+                        published = Instant.now()
                     )
                 )
             )
@@ -171,11 +171,4 @@ class EventService(
             }
             .toDto(principal.id)
     }
-
-    fun saveInitial(dto: Event) = EventEntity.fromDto(
-        dto.copy(
-            likedByMe = false,
-            published = OffsetDateTime.now().toEpochSecond()
-        )
-    ).let(repository::save).toDto(0L)
 }

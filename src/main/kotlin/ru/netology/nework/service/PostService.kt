@@ -12,7 +12,7 @@ import ru.netology.nework.exception.NotFoundException
 import ru.netology.nework.exception.PermissionDeniedException
 import ru.netology.nework.extensions.principal
 import ru.netology.nework.repository.PostRepository
-import java.time.OffsetDateTime
+import java.time.Instant
 import java.util.stream.Collectors
 
 @Service
@@ -154,7 +154,7 @@ class PostService(
                         author = principal.name,
                         authorAvatar = principal.avatar,
                         likedByMe = false,
-                        published = OffsetDateTime.now().toEpochSecond()
+                        published = Instant.now()
                     )
                 )
             )
@@ -175,7 +175,7 @@ class PostService(
             }.toDto(principal.id)
     }
 
-    fun removeById(id: Long): Unit {
+    fun removeById(id: Long) {
         val principal = principal()
         repository.findById(id)
             .orElseThrow(::NotFoundException)
@@ -209,11 +209,4 @@ class PostService(
             }
             .toDto(principal.id)
     }
-
-    fun saveInitial(dto: Post) = PostEntity.fromDto(
-        dto.copy(
-            likedByMe = false,
-            published = OffsetDateTime.now().toEpochSecond()
-        )
-    ).let(repository::save).toDto(0L)
 }

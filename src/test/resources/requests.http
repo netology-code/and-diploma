@@ -131,7 +131,7 @@ Content-Type: application/json
   "author": "",
   "authorAvatar": "",
   "content": "Red Square",
-  "published": 0,
+  "published": "2021-08-17T16:46:58.887547Z",
   "coords": {
     "lat": 55.751999,
     "long": 37.617734
@@ -273,7 +273,7 @@ Content-Type: application/json
   "author": "",
   "authorAvatar": "",
   "content": "Red Square",
-  "published": 0,
+  "published": "2021-08-17T16:46:58.887547Z",
   "coords": {
     "lat": 55.751999,
     "long": 37.617734
@@ -516,7 +516,7 @@ Content-Type: application/json
   "author": "",
   "authorAvatar": "",
   "content": "Выпускники Kotlin Developer",
-  "published": 0,
+  "published": "2021-08-17T16:46:58.887547Z",
   "type": "ONLINE",
   "link": "https://netology.ru/programs/android-app",
   "speakerIds": [1, 6],
@@ -557,7 +557,7 @@ Content-Type: application/json
   "author": "",
   "authorAvatar": "",
   "content": "Выпускники Kotlin Developer (updated)",
-  "published": 0,
+  "published": "2021-08-17T16:46:58.887547Z",
   "type": "ONLINE",
   "link": "https://netology.ru/programs/android-app",
   "speakerIds": [1, 6],

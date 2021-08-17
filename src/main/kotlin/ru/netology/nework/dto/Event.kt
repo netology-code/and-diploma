@@ -1,6 +1,7 @@
 package ru.netology.nework.dto
 
 import ru.netology.nework.enumeration.EventType
+import java.time.Instant
 
 data class Event(
     val id: Long,
@@ -11,8 +12,8 @@ data class Event(
     /**
      * Дата и время проведения
      */
-    val datetime: Long,
-    val published: Long,
+    val datetime: Instant,
+    val published: Instant,
     /**
      * Координаты проведения
      */

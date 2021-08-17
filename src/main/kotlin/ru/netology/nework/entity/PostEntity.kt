@@ -1,6 +1,7 @@
 package ru.netology.nework.entity
 
 import ru.netology.nework.dto.Post
+import java.time.Instant
 import javax.persistence.*
 
 @Entity
@@ -11,7 +12,7 @@ data class PostEntity(
     var author: UserEntity,
     @Column(columnDefinition = "TEXT")
     var content: String,
-    var published: Long,
+    var published: Instant,
     /**
      * Координаты
      */
@@ -34,7 +35,6 @@ data class PostEntity(
     @Embedded
     var attachment: AttachmentEmbeddable? = null,
 ) {
-    constructor(id: Long) : this(id, UserEntity(0), "", 0L)
 
     fun toDto(myId: Long) = Post(
         id = id,

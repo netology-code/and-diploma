@@ -2,6 +2,7 @@ package ru.netology.nework.entity
 
 import ru.netology.nework.dto.Event
 import ru.netology.nework.enumeration.EventType
+import java.time.Instant
 import javax.persistence.*
 
 @Entity
@@ -16,8 +17,8 @@ data class EventEntity(
     /**
      * Дата и время проведения
      */
-    var datetime: Long,
-    var published: Long,
+    var datetime: Instant,
+    var published: Instant,
     /**
      * Координаты проведения
      */
