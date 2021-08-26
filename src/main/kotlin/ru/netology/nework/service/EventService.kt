@@ -5,6 +5,7 @@ import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import ru.netology.nework.dto.Event
+import ru.netology.nework.entity.AttachmentEmbeddable
 import ru.netology.nework.entity.CoordinatesEmbeddable
 import ru.netology.nework.entity.EventEntity
 import ru.netology.nework.exception.NotFoundException
@@ -111,6 +112,7 @@ class EventService(
                     content = dto.content,
                     coords = dto.coords?.let(CoordinatesEmbeddable::fromCoordinates),
                     speakerIds = dto.speakerIds.toMutableSet(),
+                    attachment = AttachmentEmbeddable.fromDto(dto.attachment),
                 ).also(repository::save)
             }.toDto(principal.id)
     }
