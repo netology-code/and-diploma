@@ -17,8 +17,8 @@ data class EventEntity(
     /**
      * Дата и время проведения
      */
-    var datetime: Instant,
-    var published: Instant,
+    var datetime: Instant?,
+    var published: Instant?,
     /**
      * Координаты проведения
      */
