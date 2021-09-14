@@ -33,7 +33,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("com.google.firebase:firebase-admin:8.0.0")
+    implementation("com.google.firebase:firebase-admin:8.0.1")
     implementation("com.cloudinary:cloudinary-http42:1.29.0")
     runtimeOnly("org.postgresql:postgresql:42.2.23")
     runtimeOnly("com.h2database:h2")
