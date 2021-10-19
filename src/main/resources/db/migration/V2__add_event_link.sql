@@ -1,0 +1,1 @@
+alter table event_entity add column link text;

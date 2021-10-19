@@ -113,6 +113,7 @@ class EventService(
                     coords = dto.coords?.let(CoordinatesEmbeddable::fromCoordinates),
                     speakerIds = dto.speakerIds.toMutableSet(),
                     attachment = AttachmentEmbeddable.fromDto(dto.attachment),
+                    link = dto.link,
                 ).also(repository::save)
             }.toDto(principal.id)
     }
@@ -135,9 +136,10 @@ class EventService(
         return repository
             .findById(id)
             .orElseThrow(::NotFoundException)
-            .apply {
-                likeOwnerIds.add(principal.id)
+            .let {
+                it.copy(likeOwnerIds = it.likeOwnerIds + principal.id)
             }
+            .also(repository::save)
             .toDto(principal.id)
     }
 
@@ -146,9 +148,10 @@ class EventService(
         return repository
             .findById(id)
             .orElseThrow(::NotFoundException)
-            .apply {
-                likeOwnerIds.remove(principal.id)
+            .let {
+                it.copy(likeOwnerIds = it.likeOwnerIds - principal.id)
             }
+            .also(repository::save)
             .toDto(principal.id)
     }
 

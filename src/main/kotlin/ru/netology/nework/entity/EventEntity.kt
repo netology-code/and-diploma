@@ -9,44 +9,45 @@ import javax.persistence.*
 data class EventEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
+    val id: Long,
     @ManyToOne
-    var author: UserEntity,
+    val author: UserEntity,
     @Column(columnDefinition = "TEXT")
-    var content: String,
+    val content: String,
     /**
      * Дата и время проведения
      */
-    var datetime: Instant?,
-    var published: Instant?,
+    val datetime: Instant?,
+    val published: Instant?,
     /**
      * Координаты проведения
      */
     @Embedded
-    var coords: CoordinatesEmbeddable? = null,
+    val coords: CoordinatesEmbeddable? = null,
     /**
      * Типы события
      */
     @Column(name = "eventType")
     @Enumerated(EnumType.STRING)
-    var type: EventType,
+    val type: EventType,
     @ElementCollection
     /**
      * Id'шники залайкавших
      */
-    var likeOwnerIds: MutableSet<Long> = mutableSetOf(),
+    val likeOwnerIds: Set<Long> = emptySet(),
     /**
      * Id'шники спикеров
      */
     @ElementCollection
-    var speakerIds: MutableSet<Long> = mutableSetOf(),
+    val speakerIds: Set<Long> = emptySet(),
     /**
      * Id'шники участников
      */
     @ElementCollection
-    var participantsIds: MutableSet<Long> = mutableSetOf(),
+    val participantsIds: MutableSet<Long> = mutableSetOf(),
     @Embedded
-    var attachment: AttachmentEmbeddable? = null,
+    val attachment: AttachmentEmbeddable? = null,
+    val link: String? = null,
 ) {
     fun toDto(myId: Long) = Event(
         id = id,
@@ -63,7 +64,8 @@ data class EventEntity(
         speakerIds = speakerIds,
         participantsIds = participantsIds,
         participatedByMe = participantsIds.contains(myId),
-        attachment = attachment?.toDto()
+        attachment = attachment?.toDto(),
+        link = link,
     )
 
     companion object {
@@ -78,7 +80,8 @@ data class EventEntity(
             mutableSetOf(),
             dto.speakerIds.toMutableSet(),
             dto.participantsIds.toMutableSet(),
-            AttachmentEmbeddable.fromDto(dto.attachment)
+            AttachmentEmbeddable.fromDto(dto.attachment),
+            dto.link,
         )
     }
 }
