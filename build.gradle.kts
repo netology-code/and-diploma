@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.3.5.RELEASE"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    id("org.jetbrains.kotlin.plugin.jpa") version "1.5.30"
+    id("org.jetbrains.kotlin.plugin.jpa") version "1.5.31"
     kotlin("jvm") version "1.5.31"
-    kotlin("plugin.spring") version "1.5.30"
+    kotlin("plugin.spring") version "1.5.31"
     id("org.flywaydb.flyway") version "5.2.4"
 }
 
@@ -33,7 +33,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("com.google.firebase:firebase-admin:8.0.1")
+    implementation("com.google.firebase:firebase-admin:8.1.0")
     implementation("com.cloudinary:cloudinary-http42:1.29.0")
     runtimeOnly("org.postgresql:postgresql:42.2.23")
     runtimeOnly("com.h2database:h2")

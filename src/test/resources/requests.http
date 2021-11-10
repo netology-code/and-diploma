@@ -637,7 +637,7 @@ client.test("Request executed successfully", function() {
 });
 %}
 
-### Получение сообщения по id
+### Получение события по id
 
 GET http://localhost:9999/api/events/{{event_id}}
 Authorization: {{token}}
