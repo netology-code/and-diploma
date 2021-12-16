@@ -80,10 +80,10 @@ class UserService(
         .findByLogin(login)
         ?.toDto() ?: throw NotFoundException()
 
-    fun getByToken(token: String): User = tokenRepository
+    fun getByToken(token: String): User? = tokenRepository
         .findByIdOrNull(token)
         ?.user
-        ?.toDto() ?: throw NotFoundException()
+        ?.toDto()
 
     override fun loadUserByUsername(username: String?): UserDetails =
         userRepository.findByLogin(username) ?: throw UsernameNotFoundException(username)

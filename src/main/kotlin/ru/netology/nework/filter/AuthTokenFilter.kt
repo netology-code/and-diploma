@@ -9,6 +9,7 @@ import ru.netology.nework.service.UserService
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import org.springframework.http.HttpStatus
 
 class AuthTokenFilter(
     private val userService: UserService,
@@ -20,7 +21,10 @@ class AuthTokenFilter(
         filterChain: FilterChain,
     ) {
         request.getHeader(HttpHeaders.AUTHORIZATION)?.let { token ->
-            val user = userService.getByToken(token)
+            val user = userService.getByToken(token) ?: run {
+                response.sendError(HttpStatus.FORBIDDEN.value())
+                return
+            }
             val authToken = UsernamePasswordAuthenticationToken(user, null, user.authorities.map(::SimpleGrantedAuthority))
             SecurityContextHolder.getContext().authentication = authToken
         }
