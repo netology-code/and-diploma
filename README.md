@@ -54,9 +54,11 @@
 <img src="https://user-images.githubusercontent.com/13727567/127230698-ded55b1f-3398-44cd-b2b6-30a1d3ca3a8a.png"/>
 И подключить:
 <img src="https://user-images.githubusercontent.com/13727567/127230791-5b33d4bb-a9f5-49cb-96c9-c70f574e76cb.png" width="480"/>
-9. Аналогично с изображениями - подключаем аддон Cloudinary:
-<img src="https://user-images.githubusercontent.com/13727567/127231577-73e20388-772a-4edf-9132-16d5dd97b50a.png" width="480"/>
-10. Перейдите в Deploy на Heroku и нажмите Deploy Branch:
+9. Для хранения изображений подключаем облачный сервис  <a href="https://imagekit.io/registration/">ImageKit</a>. После регистрации переходим на вкладку <a href="https://imagekit.io/dashboard/developer">Developer options</a> одновременно откроем настройки проекта Heroku
+<img src="https://user-images.githubusercontent.com/13727567/160804803-cf36c7d8-2485-4642-b3b5-22e09b9c250b.png"/>
+10. Скопируем значения PrivateKey, PublicKey и UrlEndpoint из <a href="https://imagekit.io/dashboard/developer">Developer options</a> в Config Vars проекта Heroku
+<img src="https://user-images.githubusercontent.com/13727567/160805982-113811dd-9a4e-4ac6-ac6c-8e4f1c82835b.png"/>
+11. Перейдите в Deploy на Heroku и нажмите Deploy Branch:
 <img src="https://user-images.githubusercontent.com/13727567/127233190-15a405e6-4cf1-4857-a305-4b495846f60d.png"/>
 Через несколько минут приложение будет собрано и развернуто. Чтобы узнать адрес сервера, нажмите на Open App:
 <img src="https://user-images.githubusercontent.com/13727567/127233518-69a8d001-64b8-474b-a88f-2a161cb62e1a.png"/>
