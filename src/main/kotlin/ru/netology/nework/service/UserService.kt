@@ -22,6 +22,7 @@ import ru.netology.nework.repository.UserRepository
 import java.security.SecureRandom
 import java.util.*
 import javax.transaction.Transactional
+import ru.netology.nework.dto.UserResponse
 
 @Service
 @Transactional
@@ -32,8 +33,8 @@ class UserService(
     private val passwordEncoder: PasswordEncoder,
     private val mediaService: MediaService,
 ) : UserDetailsService {
-    fun getAll(): List<User> = userRepository.findAll()
-        .map(UserEntity::toDto)
+    fun getAll(): List<UserResponse> = userRepository.findAll()
+        .map(UserEntity::toResponse)
 
     fun create(login: String, pass: String, name: String, avatar: String? = null): User = userRepository.save(
         UserEntity(
@@ -111,10 +112,10 @@ class UserService(
             }
     }
 
-    fun getById(id: Long): User =
+    fun getById(id: Long): UserResponse =
         userRepository.findById(id)
             .takeIf { it.isPresent }
             ?.get()
-            ?.toDto()
+            ?.toResponse()
             ?: throw NotFoundException()
 }

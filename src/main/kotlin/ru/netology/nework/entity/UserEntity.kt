@@ -5,6 +5,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import ru.netology.nework.dto.User
 import javax.persistence.*
+import ru.netology.nework.dto.UserResponse
 
 @Entity
 data class UserEntity(
@@ -26,4 +27,6 @@ data class UserEntity(
     override fun isEnabled(): Boolean = true
 
     fun toDto() = User(id, login, name, avatar, authorities.map(GrantedAuthority::getAuthority))
+
+    fun toResponse() = UserResponse(id, login, name, avatar)
 }
