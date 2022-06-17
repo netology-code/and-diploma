@@ -34,7 +34,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("com.google.firebase:firebase-admin:8.1.0")
+    implementation("com.google.firebase:firebase-admin:9.0.0")
     implementation("com.github.imagekit-developer:imagekit-java:1.0.3")
     implementation("org.apache.tika:tika-core:2.2.1")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
