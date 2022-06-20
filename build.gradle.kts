@@ -36,7 +36,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.google.firebase:firebase-admin:8.1.0")
     implementation("com.github.imagekit-developer:imagekit-java:1.0.3")
-    implementation("org.apache.tika:tika-core:2.2.1")
+    implementation("org.apache.tika:tika-core:2.4.1")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     runtimeOnly("org.postgresql:postgresql:42.3.1")
     runtimeOnly("com.h2database:h2")
