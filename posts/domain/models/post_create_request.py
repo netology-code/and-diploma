@@ -12,3 +12,4 @@ class PostCreateRequest:
     coords: Optional[CoordinatesDto]
     link: Optional[str]
     attachment: Optional[Attachment]
+    mentionIds: set[int]

@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Union
 
+from nmedia.domain.errors import TextError
 from nmedia.domain.repository import Repository
 from posts.domain.models.post_dto import PostDto
 
@@ -8,7 +9,7 @@ from posts.domain.models.post_dto import PostDto
 class PostRepository(Repository[PostDto, int], ABC):
 
     @abstractmethod
-    def save(self, item: PostDto) -> PostDto:
+    def save(self, item: PostDto) -> Union[PostDto, TextError]:
         pass
 
     @abstractmethod

@@ -1,8 +1,7 @@
 from typing import Union, Optional
 
 from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_401_UNAUTHORIZED, HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN
-
-from nmedia.domain.errors import CodeTextError
+from nmedia.domain.errors import CodeTextError, TextError
 from posts.domain.models.post_create_request import PostCreateRequest
 from posts.domain.models.post_dto import PostDto
 from posts.domain.post_repository import PostRepository
@@ -132,9 +131,14 @@ class PostService:
             existing_post.coords = request.coords
             existing_post.link = request.link
             existing_post.attachment = request.attachment
+            existing_post.mentionIds = request.mentionIds
         if existing_post.authorId != user.id:
             return CodeTextError(text="You must be the owner of this post", code=HTTP_403_FORBIDDEN)
-        return self._post_repository.save(existing_post)
+        save_result = self._post_repository.save(existing_post)
+        if type(save_result) is TextError:
+            return CodeTextError(HTTP_400_BAD_REQUEST, save_result.reason)
+        else:
+            return save_result
 
     def like_by_id(self, post_id, token) -> Union[CodeTextError, PostDto]:
         user: UserDto = self._user_repository.get_by_token(token)

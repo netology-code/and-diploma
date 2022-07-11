@@ -19,6 +19,9 @@ class PostDto:
     coords: Optional[CoordinatesDto]
     link: Optional[str]
     likeOwnerIds: set[int]
+    mentionIds: set[int]
+    mentionedMe: bool
+    likeOwnerIds: set[int]
     likedByMe: bool
     attachment: Optional[Attachment]
 
@@ -36,4 +39,6 @@ class PostDto:
             likeOwnerIds=set(),
             likedByMe=False,
             attachment=request.attachment,
+            mentionIds=request.mentionIds,
+            mentionedMe=author.id in request.mentionIds
         )

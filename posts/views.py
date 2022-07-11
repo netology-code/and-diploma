@@ -69,6 +69,7 @@ class PostsGetAllOrCreateView(RetrieveAPIView, CreateAPIView):
             coords=coords,
             link=serializer.validated_data['link'],
             attachment=attachment,
+            mentionIds=serializer.validated_data['mentionIds'],
         )
         if "Authorization" not in request.headers:
             serializer = ErrorSerializer(data=asdict(Error("Authorization required")))

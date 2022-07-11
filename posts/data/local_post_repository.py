@@ -1,12 +1,13 @@
-from typing import Optional
+from typing import Optional, Union
 
 from django.db import transaction
 
 from nmedia.data.repositories import LocalRepository
+from nmedia.domain.errors import TextError
 from nmedia.domain.repository import ID, T
 from posts.domain.models.post_dto import PostDto
 from posts.domain.post_repository import PostRepository
-from posts.models import Post, CoordinatesModel, AttachmentModel, PostLikes
+from posts.models import Post, CoordinatesModel, AttachmentModel, PostLikes, PostMentions
 from users.models import UserDetails
 
 
@@ -37,7 +38,7 @@ class LocalPostRepository(PostRepository):
         return list(map(lambda model: model.to_dto(user_id), models))
 
     @transaction.atomic
-    def save(self, item: PostDto) -> PostDto:
+    def save(self, item: PostDto) -> Union[PostDto, TextError]:
         existing = self._local_repository.get_by_id(item.id)
         if existing is None:
             to_save = Post(
@@ -64,6 +65,17 @@ class LocalPostRepository(PostRepository):
                 type=attachment.type.value,
             )
             to_save.attachment.save()
+        mention_ids = item.mentionIds
+        if mention_ids is not None:
+            if mention_ids == set():
+                PostMentions.objects.filter(post_id=to_save.id).delete()
+            for mention_id in mention_ids:
+                existing_speaker_id = PostMentions.objects.filter(user_id=mention_id, post_id=to_save.id).first()
+                if existing_speaker_id is None:
+                    user = self._user_repository.get_by_id(mention_id)
+                    if user is None:
+                        return TextError("Speaker with id " + str(mention_id) + " not found")
+                    PostMentions(user_id=user, post_id=to_save).save()
         self._local_repository.save(to_save)
         return to_save.to_dto(item.authorId)
 
