@@ -39,7 +39,7 @@ class UsersRegistrationView(CreateAPIView):
                 error_serializer.is_valid(raise_exception=True)
                 return JsonResponse(error_serializer.data, status=HTTP_500_INTERNAL_SERVER_ERROR)
             else:
-                avatar_url = avatar_result
+                avatar_url = avatar_result.url
         else:
             avatar_url = None
         token = user_service.register(
