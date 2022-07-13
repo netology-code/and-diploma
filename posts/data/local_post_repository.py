@@ -66,6 +66,7 @@ class LocalPostRepository(PostRepository):
             )
             to_save.attachment.save()
         mention_ids = item.mentionIds
+        self._local_repository.save(to_save)
         if mention_ids is not None:
             if mention_ids == set():
                 PostMentions.objects.filter(post_id=to_save.id).delete()
@@ -76,7 +77,6 @@ class LocalPostRepository(PostRepository):
                     if user is None:
                         return TextError("Speaker with id " + str(mention_id) + " not found")
                     PostMentions(user_id=user, post_id=to_save).save()
-        self._local_repository.save(to_save)
         return to_save.to_dto(item.authorId)
 
     def get_by_id(self, id: ID) -> Optional[T]:

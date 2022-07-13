@@ -37,6 +37,8 @@ class JobService:
 
     def save(self, request: JobDto, token: str) -> Union[JobDto, CodeTextError]:
         user: UserDto = self._user_repository.get_by_token(token)
+        if user is None:
+            return CodeTextError(text="Authorization required", code=HTTP_401_UNAUTHORIZED)
         return self._job_repository.save(item=request, user_id=user.id)
 
     def delete_by_id(self, job_id, token) -> Optional[CodeTextError]:

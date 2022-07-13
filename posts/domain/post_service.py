@@ -123,6 +123,8 @@ class PostService:
 
     def save(self, request: PostCreateRequest, token: str) -> Union[PostDto, CodeTextError]:
         user: UserDto = self._user_repository.get_by_token(token)
+        if user is None:
+            return CodeTextError(text="Invalid token", code=HTTP_401_UNAUTHORIZED)
         existing_post = self._post_repository.get_by_id(request.id)
         if existing_post is None:
             existing_post = PostDto.from_request(request, user)

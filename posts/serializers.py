@@ -22,7 +22,7 @@ class PostResponseSerializer(serializers.Serializer):
 class PostCreateRequestSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     content = serializers.CharField()
-    coords = CoordinatesSerializer(required=False)
+    coords = CoordinatesSerializer(required=False, allow_null=True, default=None)
     link = serializers.CharField(required=False, allow_null=True, default=None)
-    attachment = AttachmentSerializer(required=False)
+    attachment = AttachmentSerializer(required=False, allow_null=True, default=None)
     mentionIds = serializers.ListField(child=serializers.IntegerField(), default=list())

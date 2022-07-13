@@ -56,12 +56,18 @@ class EventsGetAllOrCreateView(RetrieveAPIView, CreateAPIView):
         serializer.is_valid(raise_exception=True)
         if "coords" in serializer.validated_data:
             coords_data = serializer.validated_data["coords"]
-            coords = CoordinatesDto(coords_data['id'], coords_data['long'])
+            if coords_data is None:
+                coords = None
+            else:
+                coords = CoordinatesDto(lat=coords_data['lat'], long=coords_data['long'])
         else:
             coords = None
         if "attachment" in serializer.validated_data:
             attachment_data = serializer.validated_data["attachment"]
-            attachment = Attachment(attachment_data['url'], AttachmentType.from_str(attachment_data['type']))
+            if attachment_data is None:
+                attachment = None
+            else:
+                attachment = Attachment(attachment_data['url'], AttachmentType.from_str(attachment_data['type']))
         else:
             attachment = None
         if "speaker_ids" in serializer.validated_data:
