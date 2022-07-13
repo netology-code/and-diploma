@@ -15,6 +15,7 @@ class PostResponseSerializer(serializers.Serializer):
     link = serializers.CharField(required=False, allow_null=True, default=None)
     likeOwnerIds = serializers.ListField(child=serializers.IntegerField(), default=list())
     mentionIds = serializers.ListField(child=serializers.IntegerField(), default=list())
+    mentionedMe = serializers.BooleanField()
     likedByMe = serializers.BooleanField()
     attachment = AttachmentSerializer(required=False, allow_null=True, default=None)
 
