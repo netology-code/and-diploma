@@ -1,11 +1,11 @@
-from django.urls import path
+from django.urls import re_path
 
 from . import views
 
 urlpatterns = [
-    path('', views.PostsGetAllWallView.as_view()),
-    path('latest/', views.PostsGetLatestByAuthorView.as_view()),
-    path('<int:post_id>/after/', views.PostsGetAllWallView.as_view()),
-    path('<int:post_id>/before/', views.PostsGetBeforeWallView.as_view()),
-    path('<int:post_id>/newer/', views.PostsGetNewerWallView.as_view()),
+    re_path(r'/?$', views.PostsGetAllWallView.as_view()),
+    re_path(r'/latest/?$', views.PostsGetLatestByAuthorView.as_view()),
+    re_path(r'/(?P<post_id>\d+)/after/?$', views.PostsGetAllWallView.as_view()),
+    re_path(r'/(?P<post_id>\d+)/before/?$', views.PostsGetBeforeWallView.as_view()),
+    re_path(r'/(?P<post_id>\d+)/newer/?$', views.PostsGetNewerWallView.as_view()),
 ]

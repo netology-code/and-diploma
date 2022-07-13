@@ -31,14 +31,14 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('api/posts/', include('posts.posts_urls')),
-    path('api/<int:author_id>/wall/', include('posts.wall_urls')),
-    path('api/my/wall/', include('posts.my_wall_urls')),
-    path('api/<int:user_id>/jobs/', include('jobs.job_urls')),
-    path('api/my/jobs/', include('jobs.my_job_urls')),
-    path('api/users/', include('users.urls')),
-    path('api/media/', include('media.urls')),
-    path('api/events/', include('events.urls')),
+    path('api/posts', include('posts.posts_urls')),
+    path('api/<int:author_id>/wall', include('posts.wall_urls')),
+    path('api/my/wall', include('posts.my_wall_urls')),
+    path('api/<int:user_id>/jobs', include('jobs.job_urls')),
+    path('api/my/jobs', include('jobs.my_job_urls')),
+    path('api/users', include('users.urls')),
+    re_path(r'^api/media/?$', include('media.urls')),
+    path('api/events', include('events.urls')),
     path('admin/', admin.site.urls),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

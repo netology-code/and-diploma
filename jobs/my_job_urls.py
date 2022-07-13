@@ -1,8 +1,8 @@
-from django.urls import path
+from django.urls import re_path
 
 from . import views
 
 urlpatterns = [
-    path('', views.JobGetAllOrCreateView.as_view()),
-    path('<int:job_id>', views.JobDeleteByIdView.as_view()),
+    re_path(r'^/(?P<job_id>\d+)/?$', views.JobDeleteByIdView.as_view()),
+    re_path(r'^/?$', views.JobGetAllOrCreateView.as_view()),
 ]

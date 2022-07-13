@@ -1,10 +1,10 @@
-from django.urls import path
+from django.urls import re_path
 
 from .views import UsersRegistrationView, UsersAuthenticationView, UsersGetByIdView, UsersGetAllView
 
 urlpatterns = [
-    path('', UsersGetAllView.as_view()),
-    path('registration', UsersRegistrationView.as_view()),
-    path('authentication', UsersAuthenticationView.as_view()),
-    path('<int:user_id>/', UsersGetByIdView.as_view()),
+    re_path(r'/registration/?$', UsersRegistrationView.as_view()),
+    re_path(r'/authentication/?$', UsersAuthenticationView.as_view()),
+    re_path(r'/(?P<user_id>\d+)/?$', UsersGetByIdView.as_view()),
+    re_path(r'/?$', UsersGetAllView.as_view()),
 ]

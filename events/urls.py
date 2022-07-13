@@ -1,14 +1,14 @@
-from django.urls import path
+from django.urls import re_path
 
 from . import views
 
 urlpatterns = [
-    path('', views.EventsGetAllOrCreateView.as_view()),
-    path('latest/', views.EventsGetLatestView.as_view()),
-    path('<int:event_id>/', views.EventsGetByIdOrRemoveView.as_view()),
-    path('<int:event_id>/after/', views.EventsGetAfterView.as_view()),
-    path('<int:event_id>/before/', views.EventsGetBeforeView.as_view()),
-    path('<int:event_id>/newer/', views.EventsGetNewerView.as_view()),
-    path('<int:event_id>/likes/', views.EventsLikeOrDislikeView.as_view()),
-    path('<int:event_id>/participants/', views.EventsParticipateOrUnparticipateView.as_view()),
+    re_path(r'/latest/?$', views.EventsGetLatestView.as_view()),
+    re_path(r'/(?P<event_id>\d+)/after/?$', views.EventsGetAfterView.as_view()),
+    re_path(r'/(?P<event_id>\d+)/before/?$', views.EventsGetBeforeView.as_view()),
+    re_path(r'/(?P<event_id>\d+)/newer/?$', views.EventsGetNewerView.as_view()),
+    re_path(r'/(?P<event_id>\d+)/likes/?$', views.EventsLikeOrDislikeView.as_view()),
+    re_path(r'/(?P<event_id>\d+)/participants/?$', views.EventsParticipateOrUnparticipateView.as_view()),
+    re_path(r'/(?P<event_id>\d+)/?$', views.EventsGetByIdOrRemoveView.as_view()),
+    re_path(r'/?$', views.EventsGetAllOrCreateView.as_view()),
 ]
