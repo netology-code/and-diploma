@@ -74,8 +74,8 @@ class EventsGetAllOrCreateView(RetrieveAPIView, CreateAPIView):
                 attachment = Attachment(attachment_data['url'], AttachmentType.from_str(attachment_data['type']))
         else:
             attachment = None
-        if "speaker_ids" in serializer.validated_data:
-            speaker_ids_or_null = serializer.validated_data['speaker_ids']
+        if "speakerIds" in serializer.validated_data:
+            speaker_ids_or_null = serializer.validated_data['speakerIds']
             if speaker_ids_or_null is None:
                 speaker_ids = None
             else:
@@ -90,7 +90,7 @@ class EventsGetAllOrCreateView(RetrieveAPIView, CreateAPIView):
             link=serializer.validated_data['link'],
             attachment=attachment,
             datetime=serializer.validated_data['datetime'],
-            speaker_ids=speaker_ids,
+            speakerIds=speaker_ids,
         )
         if "Authorization" not in request.headers:
             serializer = ErrorSerializer(data=asdict(Error("Authorization required")))

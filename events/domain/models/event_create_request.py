@@ -14,7 +14,7 @@ class EventCreateRequest:
     type: Optional[EventType]
     coords: Optional[CoordinatesDto]
     link: Optional[str]
-    speaker_ids: Optional[set[int]]
+    speakerIds: Optional[set[int]]
     attachment: Optional[Attachment]
     # В случае создания (id == 0), обязательно
     datetime: Optional[datetime]

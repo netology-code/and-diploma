@@ -46,5 +46,5 @@ class EventDto:
             participantsIds=set(),
             participatedByMe=False,
             type=request.type,
-            speakerIds=request.speaker_ids,
+            speakerIds=request.speakerIds,
         )
