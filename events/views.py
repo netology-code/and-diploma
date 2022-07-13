@@ -53,6 +53,10 @@ class EventsGetAllOrCreateView(RetrieveAPIView, CreateAPIView):
     def post(self, request, *args, **kwargs):
         request.data['type'] = EventType.from_str(request.data['type'])
         serializer = EventCreateRequestSerializer(data=request.data)
+        if 'attachment' in request.data:
+            attachment_request = request.data['attachment']
+            if attachment_request is not None:
+                attachment_request['type'] = AttachmentType.from_str(attachment_request['type'])
         serializer.is_valid(raise_exception=True)
         if "coords" in serializer.validated_data:
             coords_data = serializer.validated_data["coords"]
