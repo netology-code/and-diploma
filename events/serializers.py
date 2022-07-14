@@ -22,6 +22,7 @@ class EventResponseSerializer(serializers.Serializer):
     participatedByMe = serializers.BooleanField()
     attachment = AttachmentSerializer(required=False, allow_null=True, default=None)
     link = serializers.CharField(required=False, allow_null=True, default=None)
+    ownedByMe = serializers.BooleanField()
 
 
 class EventCreateRequestSerializer(serializers.Serializer):

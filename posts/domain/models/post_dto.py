@@ -24,6 +24,7 @@ class PostDto:
     likeOwnerIds: set[int]
     likedByMe: bool
     attachment: Optional[Attachment]
+    ownedByMe: bool
 
     @staticmethod
     def from_request(request: PostCreateRequest, author: UserDto) -> 'PostDto':
@@ -40,5 +41,6 @@ class PostDto:
             likedByMe=False,
             attachment=request.attachment,
             mentionIds=request.mentionIds,
-            mentionedMe=author.id in request.mentionIds
+            mentionedMe=author.id in request.mentionIds,
+            ownedByMe=False,
         )

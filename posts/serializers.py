@@ -18,6 +18,7 @@ class PostResponseSerializer(serializers.Serializer):
     mentionedMe = serializers.BooleanField()
     likedByMe = serializers.BooleanField()
     attachment = AttachmentSerializer(required=False, allow_null=True, default=None)
+    ownedByMe = serializers.BooleanField()
 
 
 class PostCreateRequestSerializer(serializers.Serializer):

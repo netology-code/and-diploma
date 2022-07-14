@@ -62,6 +62,7 @@ class Post(models.Model):
             attachment=attachment,
             mentionIds=mentions,
             mentionedMe=mentioned_me,
+            ownedByMe=self.author.id == user_id,
         )
 
 

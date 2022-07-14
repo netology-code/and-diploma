@@ -27,6 +27,7 @@ class EventDto:
     participatedByMe: bool
     attachment: Optional[Attachment]
     link: Optional[str]
+    ownedByMe: bool
 
     @staticmethod
     def from_request(request: EventCreateRequest, author: UserDto) -> 'EventDto':
@@ -47,4 +48,5 @@ class EventDto:
             participatedByMe=False,
             type=request.type,
             speakerIds=request.speakerIds,
+            ownedByMe=False,
         )

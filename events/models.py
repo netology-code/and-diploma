@@ -70,6 +70,7 @@ class EventModel(models.Model):
             participatedByMe=participated_by_me,
             attachment=attachment,
             link=self.link,
+            ownedByMe=self.author.id == user_id
         )
 
 
