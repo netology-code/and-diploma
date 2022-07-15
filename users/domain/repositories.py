@@ -8,7 +8,7 @@ from users.domain.models import UserDto, Token
 
 class UserRepository(Repository[UserDto, int], ABC):
     @abstractmethod
-    def create_user(self, login: str, password: str, name: str, avatar: str) -> UserDto:
+    def create_user(self, login: str, password: str, name: str, avatar: Optional[str]) -> UserDto:
         pass
 
     @abstractmethod

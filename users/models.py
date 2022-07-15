@@ -11,7 +11,7 @@ class UserDetails(AbstractUser):
     name = models.TextField()
 
     def to_dto(self) -> UserDto:
-        return UserDto(int(str(self.id)), self.username, str(self.name), str(self.avatar))
+        return UserDto(self.id, self.username, self.name, self.avatar)
 
 
 class TokenModel(Model):

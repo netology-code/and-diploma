@@ -17,7 +17,7 @@ class UserService:
     def get_all(self) -> list[UserDto]:
         return self._user_repository.get_all()
 
-    def register(self, login: str, password: str, name: str, avatar: str) -> Union[Token, TextError]:
+    def register(self, login: str, password: str, name: str, avatar: Optional[str]) -> Union[Token, TextError]:
         if self._user_repository.exists(login):
             return TextError("User already registered")
         user = self._user_repository.create_user(login=login, password=password, name=name, avatar=avatar)

@@ -33,7 +33,7 @@ class LocalUserRepository(UserRepository):
             return TextError("User not registered")
         return saved_user
 
-    def create_user(self, login: str, password: str, name: str, avatar: str) -> UserDto:
+    def create_user(self, login: str, password: str, name: str, avatar: Optional[str]) -> UserDto:
         user = UserDetails.objects.create_user(username=login, password=password)
         user.name = name
         if avatar is not None:

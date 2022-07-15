@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 
 
 @dataclass
@@ -6,7 +7,7 @@ class UserDto:
     id: int
     login: str
     name: str
-    avatar: str
+    avatar: Optional[str]
 
 
 @dataclass
