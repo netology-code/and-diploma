@@ -22,7 +22,7 @@ class JobGetAllByUserIdView(RetrieveAPIView):
         tags=["Jobs"],
     )
     def get(self, request, *args, **kwargs):
-        user_id = kwargs['user_id']
+        user_id = int(kwargs['user_id'])
         jobs = job_service.get_all_by_user_id(user_id)
         serializer = self.get_serializer(data=list(map(lambda item: asdict(item), jobs)), many=True)
         serializer.is_valid(raise_exception=True)
@@ -112,7 +112,7 @@ class JobDeleteByIdView(DestroyAPIView):
             return JsonResponse(request_serializer.data, status=HTTP_401_UNAUTHORIZED)
         else:
             token = request.headers["Authorization"]
-        job_id = kwargs['job_id']
+        job_id = int(kwargs['job_id'])
         result = job_service.delete_by_id(job_id=job_id, token=token)
         if isinstance(result, CodeTextError):
             serializer = ErrorSerializer(data=asdict(Error(result.text)))

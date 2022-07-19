@@ -146,7 +146,7 @@ class EventsGetByIdOrRemoveView(RetrieveAPIView, DestroyAPIView):
         tags=["Events"],
     )
     def delete(self, request, *args, **kwargs):
-        event_id = kwargs['event_id']
+        event_id = int(kwargs['event_id'])
         if "Authorization" not in request.headers:
             serializer = ErrorSerializer(data=asdict(Error("Authorization required")))
             serializer.is_valid(raise_exception=True)
@@ -170,7 +170,7 @@ class EventsGetByIdOrRemoveView(RetrieveAPIView, DestroyAPIView):
         tags=["Events"],
     )
     def get(self, request, *args, **kwargs):
-        event_id = kwargs['event_id']
+        event_id = int(kwargs['event_id'])
         result = event_service.get_by_id(event_id=event_id, token=request.headers.get("Authorization"))
         if isinstance(result, CodeTextError):
             serializer = ErrorSerializer(data=asdict(Error(result.text)))
@@ -202,7 +202,7 @@ class EventsGetAfterView(RetrieveAPIView):
             serializer = ErrorSerializer(data=asdict(Error("Count parameter must be not zero")))
             serializer.is_valid(raise_exception=True)
             return JsonResponse(serializer.data, status=HTTP_400_BAD_REQUEST)
-        event_id = kwargs['event_id']
+        event_id = int(kwargs['event_id'])
         events = event_service.get_after(id=event_id, count=count_digit, token=request.headers.get("Authorization"))
         serializer = EventResponseSerializer(data=list(map(lambda item: asdict(item), events)), many=True)
         serializer.is_valid(raise_exception=True)
@@ -229,7 +229,7 @@ class EventsGetBeforeView(RetrieveAPIView):
             serializer = ErrorSerializer(data=asdict(Error("Count parameter must be not zero")))
             serializer.is_valid(raise_exception=True)
             return JsonResponse(serializer.data, status=HTTP_400_BAD_REQUEST)
-        event_id = kwargs['event_id']
+        event_id = int(kwargs['event_id'])
         events = event_service.get_before(id=event_id, count=count_digit, token=request.headers.get("Authorization"))
         serializer = EventResponseSerializer(data=list(map(lambda item: asdict(item), events)), many=True)
         serializer.is_valid(raise_exception=True)
@@ -245,7 +245,7 @@ class EventsGetNewerView(RetrieveAPIView):
         tags=["Events"],
     )
     def get(self, request, *args, **kwargs):
-        event_id = kwargs['event_id']
+        event_id = int(kwargs['event_id'])
         events = event_service.get_newer(id=event_id, token=request.headers.get("Authorization"))
         serializer = EventResponseSerializer(data=list(map(lambda item: asdict(item), events)), many=True)
         serializer.is_valid(raise_exception=True)
@@ -263,7 +263,7 @@ class EventsLikeOrDislikeView(APIView, mixins.CreateModelMixin, mixins.DestroyMo
         tags=["Events"],
     )
     def delete(self, request, **kwargs):
-        event_id = kwargs['event_id']
+        event_id = int(kwargs['event_id'])
         if "Authorization" not in request.headers:
             serializer = ErrorSerializer(data=asdict(Error("Authorization required")))
             serializer.is_valid(raise_exception=True)
@@ -297,7 +297,7 @@ class EventsLikeOrDislikeView(APIView, mixins.CreateModelMixin, mixins.DestroyMo
             return JsonResponse(serializer.data, status=HTTP_401_UNAUTHORIZED)
         else:
             token = request.headers["Authorization"]
-        event_id = kwargs['event_id']
+        event_id = int(kwargs['event_id'])
         result = event_service.like_by_id(event_id, token)
         if isinstance(result, CodeTextError):
             serializer = ErrorSerializer(data=asdict(Error(result.text)))
@@ -321,7 +321,7 @@ class EventsParticipateOrUnparticipateView(APIView, mixins.CreateModelMixin, mix
         tags=["Events"],
     )
     def delete(self, request, **kwargs):
-        event_id = kwargs['event_id']
+        event_id = int(kwargs['event_id'])
         if "Authorization" not in request.headers:
             serializer = ErrorSerializer(data=asdict(Error("Authorization required")))
             serializer.is_valid(raise_exception=True)
@@ -355,7 +355,7 @@ class EventsParticipateOrUnparticipateView(APIView, mixins.CreateModelMixin, mix
             return JsonResponse(serializer.data, status=HTTP_401_UNAUTHORIZED)
         else:
             token = request.headers["Authorization"]
-        event_id = kwargs['event_id']
+        event_id = int(kwargs['event_id'])
         result = event_service.participate_by_id(event_id, token)
         if isinstance(result, CodeTextError):
             serializer = ErrorSerializer(data=asdict(Error(result.text)))

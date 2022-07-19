@@ -104,7 +104,7 @@ class UsersGetByIdView(RetrieveAPIView):
         tags=["Users"],
     )
     def get(self, request, *args, **kwargs):
-        user_id = kwargs['user_id']
+        user_id = int(kwargs['user_id'])
         user = user_service.get_by_id(user_id)
         if user is None:
             serializer = ErrorSerializer(data=TextError("User not found").__dict__)

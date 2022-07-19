@@ -109,7 +109,7 @@ class PostsGetAllWallView(RetrieveAPIView):
     )
     def get(self, request, *args, **kwargs):
         token = request.headers.get("Authorization")
-        author_id = kwargs['author_id']
+        author_id = int(kwargs['author_id'])
         posts = post_service.get_all_by_author_id(author_id=author_id, token=token)
         serializer = PostResponseSerializer(data=list(map(lambda item: asdict(item), posts)), many=True)
         serializer.is_valid(raise_exception=True)
@@ -158,7 +158,7 @@ class PostsGetLatestByAuthorView(RetrieveAPIView):
             serializer = ErrorSerializer(data=asdict(Error("Count parameter must be not zero")))
             serializer.is_valid(raise_exception=True)
             return JsonResponse(serializer.data, status=HTTP_400_BAD_REQUEST)
-        author_id = kwargs['author_id']
+        author_id = int(kwargs['author_id'])
         posts = post_service.get_latest_by_author(
             author_id=author_id, count=count_digit, token=request.headers.get("Authorization")
         )
@@ -236,7 +236,7 @@ class PostsGetByIdOrRemoveView(RetrieveAPIView, DestroyAPIView):
         tags=["Posts"],
     )
     def delete(self, request, *args, **kwargs):
-        post_id = kwargs['post_id']
+        post_id = int(kwargs['post_id'])
         if "Authorization" not in request.headers:
             serializer = ErrorSerializer(data=asdict(Error("Authorization required")))
             serializer.is_valid(raise_exception=True)
@@ -260,7 +260,7 @@ class PostsGetByIdOrRemoveView(RetrieveAPIView, DestroyAPIView):
         tags=["Posts"],
     )
     def get(self, request, *args, **kwargs):
-        post_id = kwargs['post_id']
+        post_id = int(kwargs['post_id'])
         result = post_service.get_by_id(post_id=post_id, token=request.headers.get("Authorization"))
         if isinstance(result, CodeTextError):
             serializer = ErrorSerializer(data=asdict(Error(result.text)))
@@ -292,8 +292,8 @@ class PostsGetAfterWallView(RetrieveAPIView):
             serializer = ErrorSerializer(data=asdict(Error("Count parameter must be not zero")))
             serializer.is_valid(raise_exception=True)
             return JsonResponse(serializer.data, status=HTTP_400_BAD_REQUEST)
-        post_id = kwargs['post_id']
-        author_id = kwargs['author_id']
+        post_id = int(kwargs['post_id'])
+        author_id = int(kwargs['author_id'])
         posts = post_service.get_after_by_author(
             author_id=author_id, id=post_id, count=count_digit, token=request.headers.get("Authorization")
         )
@@ -322,7 +322,7 @@ class PostsGetAfterView(RetrieveAPIView):
             serializer = ErrorSerializer(data=asdict(Error("Count parameter must be not zero")))
             serializer.is_valid(raise_exception=True)
             return JsonResponse(serializer.data, status=HTTP_400_BAD_REQUEST)
-        post_id = kwargs['post_id']
+        post_id = int(kwargs['post_id'])
         posts = post_service.get_after(id=post_id, count=count_digit, token=request.headers.get("Authorization"))
         serializer = PostResponseSerializer(data=list(map(lambda item: asdict(item), posts)), many=True)
         serializer.is_valid(raise_exception=True)
@@ -350,7 +350,7 @@ class PostsGetAfterMyWallView(RetrieveAPIView):
             serializer = ErrorSerializer(data=asdict(Error("Count parameter must be not zero")))
             serializer.is_valid(raise_exception=True)
             return JsonResponse(serializer.data, status=HTTP_400_BAD_REQUEST)
-        post_id = kwargs['post_id']
+        post_id = int(kwargs['post_id'])
         token = request.headers.get("Authorization")
         user = user_service.get_by_token(token)
         if user is not None:
@@ -385,8 +385,8 @@ class PostsGetBeforeWallView(RetrieveAPIView):
             serializer = ErrorSerializer(data=asdict(Error("Count parameter must be not zero")))
             serializer.is_valid(raise_exception=True)
             return JsonResponse(serializer.data, status=HTTP_400_BAD_REQUEST)
-        post_id = kwargs['post_id']
-        author_id = kwargs['author_id']
+        post_id = int(kwargs['post_id'])
+        author_id = int(kwargs['author_id'])
         posts = post_service.get_before_by_author(
             author_id=author_id, id=post_id, count=count_digit, token=request.headers.get("Authorization")
         )
@@ -415,7 +415,7 @@ class PostsGetBeforeView(RetrieveAPIView):
             serializer = ErrorSerializer(data=asdict(Error("Count parameter must be not zero")))
             serializer.is_valid(raise_exception=True)
             return JsonResponse(serializer.data, status=HTTP_400_BAD_REQUEST)
-        post_id = kwargs['post_id']
+        post_id = int(kwargs['post_id'])
         posts = post_service.get_before(id=post_id, count=count_digit, token=request.headers.get("Authorization"))
         serializer = PostResponseSerializer(data=list(map(lambda item: asdict(item), posts)), many=True)
         serializer.is_valid(raise_exception=True)
@@ -443,7 +443,7 @@ class PostsGetBeforeMyWallView(RetrieveAPIView):
             serializer = ErrorSerializer(data=asdict(Error("Count parameter must be not zero")))
             serializer.is_valid(raise_exception=True)
             return JsonResponse(serializer.data, status=HTTP_400_BAD_REQUEST)
-        post_id = kwargs['post_id']
+        post_id = int(kwargs['post_id'])
         token = request.headers.get("Authorization")
         user = user_service.get_by_token(token)
         if user is not None:
@@ -465,7 +465,7 @@ class PostsGetNewerView(RetrieveAPIView):
         tags=["Posts"],
     )
     def get(self, request, *args, **kwargs):
-        post_id = kwargs['post_id']
+        post_id = int(kwargs['post_id'])
         posts = post_service.get_newer(id=post_id, token=request.headers.get("Authorization"))
         serializer = PostResponseSerializer(data=list(map(lambda item: asdict(item), posts)), many=True)
         serializer.is_valid(raise_exception=True)
@@ -481,8 +481,8 @@ class PostsGetNewerWallView(RetrieveAPIView):
         tags=["Wall"],
     )
     def get(self, request, *args, **kwargs):
-        post_id = kwargs['post_id']
-        author_id = kwargs['author_id']
+        post_id = int(kwargs['post_id'])
+        author_id = int(kwargs['author_id'])
         posts = post_service.get_newer_by_author(
             author_id=author_id, id=post_id, token=request.headers.get("Authorization")
         )
@@ -501,7 +501,7 @@ class PostsGetNewerMyWallView(RetrieveAPIView):
         tags=["MyWall"],
     )
     def get(self, request, *args, **kwargs):
-        post_id = kwargs['post_id']
+        post_id = int(kwargs['post_id'])
         token = request.headers.get("Authorization")
         user = user_service.get_by_token(token)
         if user is not None:
@@ -527,7 +527,7 @@ class PostsLikeOrDislikeView(APIView, mixins.CreateModelMixin, mixins.DestroyMod
         tags=["Posts"],
     )
     def delete(self, request, **kwargs):
-        post_id = kwargs['post_id']
+        post_id = int(kwargs['post_id'])
         if "Authorization" not in request.headers:
             serializer = ErrorSerializer(data=asdict(Error("Authorization required")))
             serializer.is_valid(raise_exception=True)
@@ -561,7 +561,7 @@ class PostsLikeOrDislikeView(APIView, mixins.CreateModelMixin, mixins.DestroyMod
             return JsonResponse(serializer.data, status=HTTP_401_UNAUTHORIZED)
         else:
             token = request.headers["Authorization"]
-        post_id = kwargs['post_id']
+        post_id = int(kwargs['post_id'])
         result = post_service.like_by_id(post_id, token)
         if isinstance(result, CodeTextError):
             serializer = ErrorSerializer(data=asdict(Error(result.text)))
