@@ -6,6 +6,7 @@ from attachments.data.attachment_model import AttachmentModel
 from coordinates.data.coordinates_model import CoordinatesModel
 from events.domain.models.event_dto import EventDto
 from events.domain.models.event_type import EventType
+from users.domain.models import UserPreviewDto
 from users.models import UserDetails
 
 
@@ -31,16 +32,16 @@ class EventModel(models.Model):
     link = models.TextField(default=None, null=True)
 
     def to_dto(self, user_id: Optional[int]) -> EventDto:
-        like_owner_ids = EventLikes.objects.filter(event=self).values('user_id')
-        like_owners = set(map(lambda like: like['user_id'], like_owner_ids))
+        likes_user_ids_db = EventLikes.objects.filter(event=self).values('user_id')
+        likes_user_ids = set(map(lambda like: like['user_id'], likes_user_ids_db))
         if user_id is not None:
-            liked_by_me = user_id in like_owners
+            liked_by_me = user_id in likes_user_ids
         else:
             liked_by_me = False
-        participants_ids = EventParticipate.objects.filter(event=self).values('user_id')
-        participants = set(map(lambda like: like['user_id'], participants_ids))
+        participants_ids_db = EventParticipate.objects.filter(event=self).values('user_id')
+        participants_ids = set(map(lambda like: like['user_id'], participants_ids_db))
         if user_id is not None:
-            participated_by_me = user_id in participants
+            participated_by_me = user_id in participants_ids
         else:
             participated_by_me = False
         if self.coordinates is not None:
@@ -51,8 +52,13 @@ class EventModel(models.Model):
             attachment = self.attachment.to_dto()
         else:
             attachment = None
-        speaker_ids = EventSpeakers.objects.filter(event=self).values('user_id')
-        speakers = set(map(lambda like: like['user_id'], speaker_ids))
+        speaker_ids_db = EventSpeakers.objects.filter(event=self).values('user_id')
+        speakers_ids = set(map(lambda speaker: speaker['user_id'], speaker_ids_db))
+
+        all_users = likes_user_ids | speakers_ids | participants_ids
+        users = UserDetails.objects.filter(pk__in=all_users)
+        users_infos = list(map(lambda user: UserPreviewDto(user.name, user.avatar), users))
+        user_id_to_users = dict(zip(all_users, users_infos))
         return EventDto(
             id=self.id,
             authorId=self.author.id,
@@ -63,14 +69,15 @@ class EventModel(models.Model):
             published=self.published,
             coords=coordinates,
             type=EventType.from_str(self.type),
-            likeOwnerIds=like_owners,
+            likeOwnerIds=likes_user_ids,
             likedByMe=liked_by_me,
-            speakerIds=speakers,
-            participantsIds=participants,
+            speakerIds=speakers_ids,
+            participantsIds=participants_ids,
             participatedByMe=participated_by_me,
             attachment=attachment,
             link=self.link,
-            ownedByMe=self.author.id == user_id
+            ownedByMe=self.author.id == user_id,
+            users=user_id_to_users,
         )
 
 

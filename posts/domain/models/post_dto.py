@@ -5,7 +5,7 @@ from typing import Optional
 from attachments.domain.attachment import Attachment
 from coordinates.domain.coordinates_dto import CoordinatesDto
 from posts.domain.models.post_create_request import PostCreateRequest
-from users.domain.models import UserDto
+from users.domain.models import UserDto, UserPreviewDto
 
 
 @dataclass
@@ -25,6 +25,7 @@ class PostDto:
     likedByMe: bool
     attachment: Optional[Attachment]
     ownedByMe: bool
+    users: dict[int, UserPreviewDto]
 
     @staticmethod
     def from_request(request: PostCreateRequest, author: UserDto) -> 'PostDto':
@@ -43,4 +44,5 @@ class PostDto:
             mentionIds=request.mentionIds,
             mentionedMe=author.id in request.mentionIds,
             ownedByMe=False,
+            users={},
         )

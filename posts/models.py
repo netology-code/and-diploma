@@ -8,6 +8,8 @@ from django.db import models
 from attachments.data.attachment_model import AttachmentModel
 from coordinates.data.coordinates_model import CoordinatesModel
 from posts.domain.models.post_dto import PostDto
+from users.domain.models import UserPreviewDto
+from users.models import UserDetails
 
 
 class Post(models.Model):
@@ -38,16 +40,24 @@ class Post(models.Model):
             attachment = self.attachment.to_dto()
         else:
             attachment = None
-        likes_user_ids = PostLikes.objects.filter(post_id=self.id).values('user_id')
-        likes = set(map(lambda like: like['user_id'], likes_user_ids))
-        mentions_user_ids = PostMentions.objects.filter(post_id=self.id).values('user_id')
-        mentions = set(map(lambda mention: mention['user_id'], mentions_user_ids))
+        likes_user_ids_db = PostLikes.objects.filter(post_id=self.id).values('user_id')
+        likes_user_ids = set(map(lambda like: like['user_id'], likes_user_ids_db))
+
+        mentions_user_ids_db = PostMentions.objects.filter(post_id=self.id).values('user_id')
+        mentions_user_ids = set(map(lambda mention: mention['user_id'], mentions_user_ids_db))
+
+        all_users = likes_user_ids | mentions_user_ids
+        users = UserDetails.objects.filter(pk__in=all_users)
+        users_infos = list(map(lambda user: UserPreviewDto(user.name, user.avatar), users))
+        user_id_to_users = dict(zip(all_users, users_infos))
+
         if user_id is not None:
-            liked_by_me = user_id in likes
-            mentioned_me = user_id in mentions
+            liked_by_me = user_id in likes_user_ids
+            mentioned_me = user_id in mentions_user_ids
         else:
             liked_by_me = False
             mentioned_me = False
+
         return PostDto(
             id=self.id,
             authorId=self.author.id,
@@ -56,13 +66,14 @@ class Post(models.Model):
             published=self.published,
             coords=coordinates,
             link=self.link,
-            likeOwnerIds=likes,
+            likeOwnerIds=likes_user_ids,
             likedByMe=liked_by_me,
             author=self.author.name,
             attachment=attachment,
-            mentionIds=mentions,
+            mentionIds=mentions_user_ids,
             mentionedMe=mentioned_me,
             ownedByMe=self.author.id == user_id,
+            users=user_id_to_users,
         )
 
 

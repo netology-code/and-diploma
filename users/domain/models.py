@@ -11,6 +11,12 @@ class UserDto:
 
 
 @dataclass
+class UserPreviewDto:
+    name: str
+    avatar: Optional[str]
+
+
+@dataclass
 class Token:
     id: int
     token: str

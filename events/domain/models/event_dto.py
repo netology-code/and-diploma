@@ -6,7 +6,7 @@ from attachments.domain.attachment import Attachment
 from coordinates.domain.coordinates_dto import CoordinatesDto
 from events.domain.models.event_create_request import EventCreateRequest
 from events.domain.models.event_type import EventType
-from users.domain.models import UserDto
+from users.domain.models import UserDto, UserPreviewDto
 
 
 @dataclass
@@ -28,6 +28,7 @@ class EventDto:
     attachment: Optional[Attachment]
     link: Optional[str]
     ownedByMe: bool
+    users: dict[int, UserPreviewDto]
 
     @staticmethod
     def from_request(request: EventCreateRequest, author: UserDto) -> 'EventDto':
@@ -49,4 +50,6 @@ class EventDto:
             type=request.type,
             speakerIds=request.speakerIds,
             ownedByMe=False,
+            likeOwners={},
+            participants={},
         )

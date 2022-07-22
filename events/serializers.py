@@ -3,6 +3,7 @@ from rest_framework import serializers
 from attachments.serilizers import AttachmentSerializer
 from coordinates.serilizers import CoordinatesSerializer
 from events.domain.models.event_type import EventType
+from users.serializers import UserPreviewSerializer
 
 
 class EventResponseSerializer(serializers.Serializer):
@@ -23,6 +24,7 @@ class EventResponseSerializer(serializers.Serializer):
     attachment = AttachmentSerializer(required=False, allow_null=True, default=None)
     link = serializers.CharField(required=False, allow_null=True, default=None)
     ownedByMe = serializers.BooleanField()
+    users = serializers.DictField(child=UserPreviewSerializer())
 
 
 class EventCreateRequestSerializer(serializers.Serializer):

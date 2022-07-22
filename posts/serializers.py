@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from attachments.serilizers import AttachmentSerializer
 from coordinates.serilizers import CoordinatesSerializer
+from users.serializers import UserPreviewSerializer
 
 
 class PostResponseSerializer(serializers.Serializer):
@@ -19,6 +20,7 @@ class PostResponseSerializer(serializers.Serializer):
     likedByMe = serializers.BooleanField()
     attachment = AttachmentSerializer(required=False, allow_null=True, default=None)
     ownedByMe = serializers.BooleanField()
+    users = serializers.DictField(child=UserPreviewSerializer())
 
 
 class PostCreateRequestSerializer(serializers.Serializer):

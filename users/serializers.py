@@ -13,6 +13,11 @@ class TokenSerializer(serializers.Serializer):
     token = serializers.CharField()
 
 
+class UserPreviewSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    avatar = serializers.CharField(required=False, allow_null=True, default=None)
+
+
 class AuthenticationRequestSerializer(serializers.Serializer):
     login = serializers.CharField()
     password = serializers.CharField()
