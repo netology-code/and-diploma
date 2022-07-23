@@ -14,6 +14,7 @@ class EventDto:
     id: int
     authorId: int
     author: str
+    authorJob: Optional[str]
     authorAvatar: Optional[str]
     content: str
     datetime: datetime
@@ -50,6 +51,6 @@ class EventDto:
             type=request.type,
             speakerIds=request.speakerIds,
             ownedByMe=False,
-            likeOwners={},
-            participants={},
+            users={},
+            authorJob=None,
         )

@@ -7,6 +7,7 @@ from django.db import models
 
 from attachments.data.attachment_model import AttachmentModel
 from coordinates.data.coordinates_model import CoordinatesModel
+from jobs.models import JobModel
 from posts.domain.models.post_dto import PostDto
 from users.domain.models import UserPreviewDto
 from users.models import UserDetails
@@ -58,6 +59,12 @@ class Post(models.Model):
             liked_by_me = False
             mentioned_me = False
 
+        last_job = JobModel.objects.filter(user=self.author.id).order_by('-start').values('name').first()
+        if last_job is None:
+            last_job_name = None
+        else:
+            last_job_name = last_job['name']
+
         return PostDto(
             id=self.id,
             authorId=self.author.id,
@@ -74,6 +81,7 @@ class Post(models.Model):
             mentionedMe=mentioned_me,
             ownedByMe=self.author.id == user_id,
             users=user_id_to_users,
+            authorJob=last_job_name,
         )
 
 

@@ -13,6 +13,7 @@ class PostDto:
     id: int
     authorId: int
     author: str
+    authorJob: Optional[str]
     authorAvatar: Optional[str]
     content: str
     published: datetime
@@ -45,4 +46,5 @@ class PostDto:
             mentionedMe=author.id in request.mentionIds,
             ownedByMe=False,
             users={},
+            authorJob=None,
         )

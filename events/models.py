@@ -6,6 +6,7 @@ from attachments.data.attachment_model import AttachmentModel
 from coordinates.data.coordinates_model import CoordinatesModel
 from events.domain.models.event_dto import EventDto
 from events.domain.models.event_type import EventType
+from jobs.models import JobModel
 from users.domain.models import UserPreviewDto
 from users.models import UserDetails
 
@@ -59,6 +60,13 @@ class EventModel(models.Model):
         users = UserDetails.objects.filter(pk__in=all_users)
         users_infos = list(map(lambda user: UserPreviewDto(user.name, user.avatar), users))
         user_id_to_users = dict(zip(all_users, users_infos))
+
+        last_job = JobModel.objects.filter(user=self.author.id).order_by('-start').values('name').first()
+        if last_job is None:
+            last_job_name = None
+        else:
+            last_job_name = last_job['name']
+
         return EventDto(
             id=self.id,
             authorId=self.author.id,
@@ -78,6 +86,7 @@ class EventModel(models.Model):
             link=self.link,
             ownedByMe=self.author.id == user_id,
             users=user_id_to_users,
+            authorJob=last_job_name,
         )
 
 

@@ -10,6 +10,7 @@ class PostResponseSerializer(serializers.Serializer):
     authorId = serializers.IntegerField()
     author = serializers.CharField()
     authorAvatar = serializers.CharField(required=False, allow_null=True, default=None)
+    authorJob = serializers.CharField(required=False, allow_null=True, default=None)
     content = serializers.CharField()
     published = serializers.DateTimeField()
     coords = CoordinatesSerializer(required=False, allow_null=True, default=None)
