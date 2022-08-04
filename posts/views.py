@@ -1,7 +1,7 @@
 from dataclasses import asdict
 
 from django.http import JsonResponse
-from drf_yasg.openapi import Parameter, IN_HEADER
+from drf_yasg.openapi import Parameter, IN_HEADER, IN_QUERY
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import mixins
 from rest_framework.generics import RetrieveAPIView, CreateAPIView, DestroyAPIView
@@ -140,7 +140,10 @@ class PostsGetAllMyWallView(RetrieveAPIView):
 
 class PostsGetLatestByAuthorView(RetrieveAPIView):
     @swagger_auto_schema(
-        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string")],
+        manual_parameters=[
+            Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string"),
+            Parameter(in_=IN_QUERY, name="count", required=True, type="integer"),
+        ],
         responses={
             HTTP_200_OK: PostResponseSerializer(many=True),
             HTTP_400_BAD_REQUEST: ErrorSerializer(),
@@ -169,7 +172,10 @@ class PostsGetLatestByAuthorView(RetrieveAPIView):
 
 class PostsGetLatestView(RetrieveAPIView):
     @swagger_auto_schema(
-        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string")],
+        manual_parameters=[
+            Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string"),
+            Parameter(in_=IN_QUERY, name="count", required=True, type="integer"),
+        ],
         responses={
             HTTP_200_OK: PostResponseSerializer(many=True),
             HTTP_400_BAD_REQUEST: ErrorSerializer(),
@@ -195,7 +201,10 @@ class PostsGetLatestView(RetrieveAPIView):
 
 class PostsGetLatestMyView(RetrieveAPIView):
     @swagger_auto_schema(
-        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=True, type="string")],
+        manual_parameters=[
+            Parameter(in_=IN_HEADER, name="Authorization", required=True, type="string"),
+            Parameter(in_=IN_QUERY, name="count", required=True, type="integer"),
+        ],
         responses={
             HTTP_200_OK: PostResponseSerializer(many=True),
             HTTP_400_BAD_REQUEST: ErrorSerializer(),
@@ -274,7 +283,10 @@ class PostsGetByIdOrRemoveView(RetrieveAPIView, DestroyAPIView):
 
 class PostsGetAfterWallView(RetrieveAPIView):
     @swagger_auto_schema(
-        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string")],
+        manual_parameters=[
+            Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string"),
+            Parameter(in_=IN_QUERY, name="count", required=True, type="integer"),
+        ],
         responses={
             HTTP_200_OK: PostResponseSerializer(many=True),
             HTTP_400_BAD_REQUEST: ErrorSerializer(),
@@ -304,7 +316,10 @@ class PostsGetAfterWallView(RetrieveAPIView):
 
 class PostsGetAfterView(RetrieveAPIView):
     @swagger_auto_schema(
-        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string")],
+        manual_parameters=[
+            Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string"),
+            Parameter(in_=IN_QUERY, name="count", required=True, type="integer"),
+        ],
         responses={
             HTTP_200_OK: PostResponseSerializer(many=True),
             HTTP_400_BAD_REQUEST: ErrorSerializer(),
@@ -331,7 +346,10 @@ class PostsGetAfterView(RetrieveAPIView):
 
 class PostsGetAfterMyWallView(RetrieveAPIView):
     @swagger_auto_schema(
-        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=True, type="string")],
+        manual_parameters=[
+            Parameter(in_=IN_HEADER, name="Authorization", required=True, type="string"),
+            Parameter(in_=IN_QUERY, name="count", required=True, type="integer"),
+        ],
         responses={
             HTTP_200_OK: PostResponseSerializer(many=True),
             HTTP_400_BAD_REQUEST: ErrorSerializer(),
@@ -367,7 +385,10 @@ class PostsGetAfterMyWallView(RetrieveAPIView):
 
 class PostsGetBeforeWallView(RetrieveAPIView):
     @swagger_auto_schema(
-        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string")],
+        manual_parameters=[
+            Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string"),
+            Parameter(in_=IN_QUERY, name="count", required=True, type="integer"),
+        ],
         responses={
             HTTP_200_OK: PostResponseSerializer(many=True),
             HTTP_400_BAD_REQUEST: ErrorSerializer(),
@@ -397,7 +418,10 @@ class PostsGetBeforeWallView(RetrieveAPIView):
 
 class PostsGetBeforeView(RetrieveAPIView):
     @swagger_auto_schema(
-        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string")],
+        manual_parameters=[
+            Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string"),
+            Parameter(in_=IN_QUERY, name="count", required=True, type="integer"),
+        ],
         responses={
             HTTP_200_OK: PostResponseSerializer(many=True),
             HTTP_400_BAD_REQUEST: ErrorSerializer(),
@@ -424,7 +448,10 @@ class PostsGetBeforeView(RetrieveAPIView):
 
 class PostsGetBeforeMyWallView(RetrieveAPIView):
     @swagger_auto_schema(
-        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=True, type="string")],
+        manual_parameters=[
+            Parameter(in_=IN_HEADER, name="Authorization", required=True, type="string"),
+            Parameter(in_=IN_QUERY, name="count", required=True, type="integer"),
+        ],
         responses={
             HTTP_200_OK: PostResponseSerializer(many=True),
             HTTP_400_BAD_REQUEST: ErrorSerializer(),

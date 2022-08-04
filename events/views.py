@@ -1,7 +1,7 @@
 from dataclasses import asdict
 
 from django.http import JsonResponse
-from drf_yasg.openapi import Parameter, IN_HEADER
+from drf_yasg.openapi import Parameter, IN_HEADER, IN_QUERY
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import mixins
 from rest_framework.generics import RetrieveAPIView, CreateAPIView, DestroyAPIView
@@ -111,7 +111,10 @@ class EventsGetAllOrCreateView(RetrieveAPIView, CreateAPIView):
 
 class EventsGetLatestView(RetrieveAPIView):
     @swagger_auto_schema(
-        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string")],
+        manual_parameters=[
+            Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string"),
+            Parameter(in_=IN_QUERY, name="count", required=True, type="integer"),
+        ],
         responses={
             HTTP_200_OK: EventResponseSerializer(many=True),
             HTTP_400_BAD_REQUEST: ErrorSerializer(),
@@ -184,7 +187,10 @@ class EventsGetByIdOrRemoveView(RetrieveAPIView, DestroyAPIView):
 
 class EventsGetAfterView(RetrieveAPIView):
     @swagger_auto_schema(
-        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string")],
+        manual_parameters=[
+            Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string"),
+            Parameter(in_=IN_QUERY, name="count", required=True, type="integer"),
+        ],
         responses={
             HTTP_200_OK: EventResponseSerializer(many=True),
             HTTP_400_BAD_REQUEST: ErrorSerializer(),
@@ -211,7 +217,10 @@ class EventsGetAfterView(RetrieveAPIView):
 
 class EventsGetBeforeView(RetrieveAPIView):
     @swagger_auto_schema(
-        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string")],
+        manual_parameters=[
+            Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string"),
+            Parameter(in_=IN_QUERY, name="count", required=True, type="integer"),
+        ],
         responses={
             HTTP_200_OK: EventResponseSerializer(many=True),
             HTTP_400_BAD_REQUEST: ErrorSerializer(),
