@@ -49,7 +49,7 @@ class PostRepository(Repository[PostDto, int], ABC):
         pass
 
     @abstractmethod
-    def get_by_id_with_user_id(self, id: int, user_id: int) -> PostDto:
+    def get_by_id_with_user_id(self, id: int, user_id: int) -> Optional[PostDto]:
         pass
 
     @abstractmethod

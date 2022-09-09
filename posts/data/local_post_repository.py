@@ -86,14 +86,12 @@ class LocalPostRepository(PostRepository):
         else:
             return None
 
-    def get_by_id_with_user_id(self, id: int, user_id: int) -> PostDto:
-        result = self.get_by_id(id)
-        if user_id in result.likeOwnerIds:
-            liked_by_me = True
+    def get_by_id_with_user_id(self, id: int, user_id: int) -> Optional[PostDto]:
+        result = self._local_repository.get_by_id(id)
+        if result is not None:
+            return result.to_dto(user_id)
         else:
-            liked_by_me = False
-        result.liked_by_me = liked_by_me
-        return result
+            return None
 
     def get_all(self) -> list[T]:
         return list(map(lambda model: model.to_dto(None), self._local_repository.get_all()))
