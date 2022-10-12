@@ -117,6 +117,8 @@ class EventService:
             existing_event.link = request.link
             existing_event.attachment = request.attachment
             existing_event.speakerIds = request.speakerIds
+            if request.type is not None:
+                existing_event.type = request.type
         if existing_event.authorId != user.id:
             return CodeTextError(HTTP_403_FORBIDDEN, "You must be the owner of this event")
         result = self._event_repository.save(existing_event)

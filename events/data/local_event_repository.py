@@ -34,6 +34,8 @@ class LocalEventRepository(EventRepository):
             existing.link = item.link
             if item.datetime is not None:
                 existing.datetime = item.datetime
+            if item.type is not None:
+                existing.type = item.type
             to_save = existing
         coordinates = item.coords
         if coordinates is not None:
