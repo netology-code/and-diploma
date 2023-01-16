@@ -57,7 +57,7 @@ class EventModel(models.Model):
         speakers_ids = set(map(lambda speaker: speaker['user_id'], speaker_ids_db))
 
         all_users = likes_user_ids | speakers_ids | participants_ids
-        users = UserDetails.objects.filter(pk__in=all_users)
+        users = UserDetails.objects.filter(pk__in=all_users).order_by('-id')
         users_infos = list(map(lambda user: UserPreviewDto(user.name, user.avatar), users))
         user_id_to_users = dict(zip(all_users, users_infos))
 

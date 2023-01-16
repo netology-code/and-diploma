@@ -48,7 +48,7 @@ class Post(models.Model):
         mentions_user_ids = set(map(lambda mention: mention['user_id'], mentions_user_ids_db))
 
         all_users = likes_user_ids | mentions_user_ids
-        users = UserDetails.objects.filter(pk__in=all_users)
+        users = UserDetails.objects.filter(pk__in=all_users).order_by('-id')
         users_infos = list(map(lambda user: UserPreviewDto(user.name, user.avatar), users))
         user_id_to_users = dict(zip(all_users, users_infos))
 
