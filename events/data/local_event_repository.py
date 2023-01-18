@@ -44,6 +44,8 @@ class LocalEventRepository(EventRepository):
                 long=coordinates.long,
             )
             to_save.coordinates.save()
+        else:
+            to_save.coordinates = None
         attachment = item.attachment
         if attachment is not None:
             to_save.attachment = AttachmentModel(
@@ -51,6 +53,8 @@ class LocalEventRepository(EventRepository):
                 type=attachment.type.value,
             )
             to_save.attachment.save()
+        else:
+            to_save.attachment = None
         self._local_repository.save(to_save)
         speaker_ids = item.speakerIds
         if speaker_ids is not None:

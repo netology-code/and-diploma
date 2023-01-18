@@ -58,6 +58,8 @@ class LocalPostRepository(PostRepository):
                 long=coordinates.long,
             )
             to_save.coordinates.save()
+        else:
+            to_save.coordinates = None
         attachment = item.attachment
         if attachment is not None:
             to_save.attachment = AttachmentModel(
@@ -65,6 +67,8 @@ class LocalPostRepository(PostRepository):
                 type=attachment.type.value,
             )
             to_save.attachment.save()
+        else:
+            to_save.attachment = None
         mention_ids = item.mentionIds
         self._local_repository.save(to_save)
         if mention_ids is not None:
