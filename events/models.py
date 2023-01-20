@@ -58,8 +58,8 @@ class EventModel(models.Model):
 
         all_users = likes_user_ids | speakers_ids | participants_ids
         users = UserDetails.objects.filter(pk__in=all_users).order_by('-id')
-        users_infos = list(map(lambda user: UserPreviewDto(user.name, user.avatar), users))
-        user_id_to_users = dict(zip(all_users, users_infos))
+        users_infos = list(map(lambda user: (user.id, UserPreviewDto(user.name, user.avatar)), users))
+        user_id_to_users = dict(users_infos)
 
         last_job = JobModel.objects.filter(user=self.author.id).order_by('-start').values('name').first()
         if last_job is None:
