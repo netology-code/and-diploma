@@ -55,13 +55,12 @@ class LocalEventRepository(EventRepository):
             to_save.attachment.save()
         else:
             to_save.attachment = None
-        self._local_repository.save(to_save)
+        event_id = self._local_repository.save(to_save)
         speaker_ids = item.speakerIds
+        EventSpeakers.objects.filter(event=event_id).delete()
         if speaker_ids is not None:
-            if speaker_ids == set():
-                EventSpeakers.objects.filter(event=to_save.id).delete()
             for speaker_id in speaker_ids:
-                existing_speaker_id = EventSpeakers.objects.filter(user=speaker_id, event=to_save.id).first()
+                existing_speaker_id = EventSpeakers.objects.filter(user=speaker_id, event=event_id).first()
                 if existing_speaker_id is None:
                     user = self._user_repository.get_by_id(speaker_id)
                     if user is None:
