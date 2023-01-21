@@ -30,4 +30,4 @@ class PostCreateRequestSerializer(serializers.Serializer):
     coords = CoordinatesSerializer(required=False, allow_null=True, default=None)
     link = serializers.CharField(required=False, allow_null=True, default=None)
     attachment = AttachmentSerializer(required=False, allow_null=True, default=None)
-    mentionIds = serializers.ListField(child=serializers.IntegerField(), default=list())
+    mentionIds = serializers.ListField(child=serializers.IntegerField(), required=False, allow_null=True, default=None)

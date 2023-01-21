@@ -70,10 +70,9 @@ class LocalPostRepository(PostRepository):
         else:
             to_save.attachment = None
         mention_ids = item.mentionIds
-        self._local_repository.save(to_save)
+        post_id = self._local_repository.save(to_save)
+        PostMentions.objects.filter(post_id=post_id).delete()
         if mention_ids is not None:
-            if mention_ids == set():
-                PostMentions.objects.filter(post_id=to_save.id).delete()
             for mention_id in mention_ids:
                 existing_speaker_id = PostMentions.objects.filter(user_id=mention_id, post_id=to_save.id).first()
                 if existing_speaker_id is None:
