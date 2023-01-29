@@ -511,7 +511,7 @@ class PostsGetNewerWallView(RetrieveAPIView):
         post_id = int(kwargs['post_id'])
         author_id = int(kwargs['author_id'])
         posts = post_service.get_newer_by_author(
-            author_id=author_id, id=post_id, token=request.headers.get("Authorization")
+            author_id=author_id, post_id=post_id, token=request.headers.get("Authorization")
         )
         serializer = PostResponseSerializer(data=list(map(lambda item: asdict(item), posts)), many=True)
         serializer.is_valid(raise_exception=True)
