@@ -31,7 +31,7 @@ class EventResponseSerializer(serializers.Serializer):
 class EventCreateRequestSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     content = serializers.CharField()
-    datetime = serializers.DateTimeField(required=False, allow_null=True, default=None)
+    datetime = serializers.DateTimeField(required=True, allow_null=False)
     coords = CoordinatesSerializer(required=False, allow_null=True, default=None)
     type = serializers.ChoiceField(choices=EventType, required=False, allow_null=True, default=None)
     attachment = AttachmentSerializer(required=False, allow_null=True, default=None)
