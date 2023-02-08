@@ -117,6 +117,7 @@ class EventService:
             existing_event.link = request.link
             existing_event.attachment = request.attachment
             existing_event.speakerIds = request.speakerIds
+            existing_event.datetime = request.datetime
             if request.type is not None:
                 existing_event.type = request.type
         if existing_event.authorId != user.id:
