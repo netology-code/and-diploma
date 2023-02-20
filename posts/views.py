@@ -261,9 +261,9 @@ class PostsGetByIdOrRemoveView(RetrieveAPIView, DestroyAPIView):
             return JsonResponse(data=dict(), safe=False)
 
     @swagger_auto_schema(
-        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=True, type="string")],
+        manual_parameters=[Parameter(in_=IN_HEADER, name="Authorization", required=False, type="string")],
         responses={
-            HTTP_200_OK: PostResponseSerializer(many=True),
+            HTTP_200_OK: PostResponseSerializer(),
             HTTP_404_NOT_FOUND: ErrorSerializer(),
         },
         tags=["Posts"],
