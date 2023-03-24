@@ -36,4 +36,4 @@ class EventCreateRequestSerializer(serializers.Serializer):
     type = serializers.ChoiceField(choices=EventType, required=False, allow_null=True, default=None)
     attachment = AttachmentSerializer(required=False, allow_null=True, default=None)
     link = serializers.CharField(required=False, allow_null=True, default=None)
-    speakerIds = serializers.ListField(child=serializers.IntegerField(), required=False, allow_null=True, default=None)
+    speakerIds = serializers.ListField(child=serializers.IntegerField(), default=list())
