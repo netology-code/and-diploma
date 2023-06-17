@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_500_INTERNAL_SERVER_ERROR, HTTP_404_NOT_FOUND
 from nmedia.data.serializer import ErrorSerializer
 from nmedia.dependencies import DependencyContainer
@@ -59,6 +59,8 @@ class UsersRegistrationView(CreateAPIView):
 
 
 class UsersAuthenticationView(CreateAPIView):
+    parser_classes = [JSONParser, FormParser]
+
     @swagger_auto_schema(
         responses={
             HTTP_200_OK: TokenSerializer(),
