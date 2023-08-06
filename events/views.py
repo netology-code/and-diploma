@@ -51,7 +51,8 @@ class EventsGetAllOrCreateView(RetrieveAPIView, CreateAPIView):
         tags=["Events"],
     )
     def post(self, request, *args, **kwargs):
-        request.data['type'] = EventType.from_str(request.data['type'])
+        if 'type' in request.data:
+            request.data['type'] = EventType.from_str(request.data['type'])
         serializer = EventCreateRequestSerializer(data=request.data)
         if 'attachment' in request.data:
             attachment_request = request.data['attachment']
