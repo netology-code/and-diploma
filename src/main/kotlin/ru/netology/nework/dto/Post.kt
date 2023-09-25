@@ -1,14 +1,16 @@
 package ru.netology.nework.dto
 
+import jakarta.validation.constraints.NotBlank
 import java.time.Instant
 
 data class Post(
-    val id: Long,
-    val authorId: Long,
-    val author: String,
-    val authorAvatar: String?,
+    val id: Long = 0,
+    val authorId: Long = 0,
+    val author: String = "",
+    val authorAvatar: String? = null,
+    @NotBlank
     val content: String,
-    val published: Instant,
+    val published: Instant = Instant.now(),
     /**
      * Координаты
      */
@@ -39,4 +41,8 @@ data class Post(
      */
     val likedByMe: Boolean = false,
     val attachment: Attachment? = null,
+    /**
+     * Все юзеры, участвующие в посте как упомянутые и лайкеры
+     */
+    val users: Map<Long, UserPreview> = emptyMap(),
 )

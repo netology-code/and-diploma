@@ -11,6 +11,7 @@ import ru.netology.nework.entity.EventEntity
 import ru.netology.nework.exception.NotFoundException
 import ru.netology.nework.exception.PermissionDeniedException
 import ru.netology.nework.extensions.principal
+import ru.netology.nework.mapper.EventEntityToDtoMapper
 import ru.netology.nework.repository.EventRepository
 import java.time.Instant
 import java.util.stream.Collectors
@@ -19,70 +20,64 @@ import java.util.stream.Collectors
 @Transactional
 class EventService(
     private val repository: EventRepository,
+    private val eventEntityToDtoMapper: EventEntityToDtoMapper,
 ) {
     companion object {
         const val maxLoadSize = 100
     }
 
     fun getAll(): List<Event> {
-        val principal = principal()
         return repository
             .findAll(Sort.by(Sort.Direction.DESC, "id"))
-            .map { it.toDto(principal.id) }
+            .map { eventEntityToDtoMapper(it) }
     }
 
     fun getById(id: Long): Event {
-        val principal = principal()
         return repository
             .findById(id)
             .orElseThrow(::NotFoundException)
-            .toDto(principal.id)
+            .let { eventEntityToDtoMapper(it) }
     }
 
     fun getLatest(count: Int): List<Event> {
-        val principal = principal()
         return repository
             .findAll(PageRequest.of(0, minOf(maxLoadSize, count), Sort.by(Sort.Direction.DESC, "id")))
             .content
-            .map { it.toDto(principal.id) }
+            .map { eventEntityToDtoMapper(it) }
     }
 
     fun getNewer(id: Long): List<Event> {
-        val principal = principal()
         return repository
             .findAllByIdGreaterThan(id, Sort.by(Sort.Direction.ASC, "id"))
-            .map { it.toDto(principal.id) }
+            .map { eventEntityToDtoMapper(it) }
             .collect(Collectors.toList())
     }
 
     fun getBefore(id: Long, count: Int): List<Event> {
-        val principal = principal()
         return repository
             .findAllByIdLessThan(id, Sort.by(Sort.Direction.DESC, "id"))
             // just for simplicity: use normal limiting in production
             .limit(minOf(maxLoadSize, count).toLong())
-            .map { it.toDto(principal.id) }
+            .map { eventEntityToDtoMapper(it) }
             .collect(Collectors.toList())
     }
 
     fun getAfter(id: Long, count: Int): List<Event> {
-        val principal = principal()
         return repository
             .findAllByIdGreaterThan(id, Sort.by(Sort.Direction.ASC, "id"))
             // just for simplicity: use normal limiting in production
             .limit(minOf(maxLoadSize, count).toLong())
-            .map { it.toDto(principal.id) }
+            .map { eventEntityToDtoMapper(it) }
             .collect(Collectors.toList())
             .reversed()
     }
 
     fun getAfterByAuthorId(authorId: Long, id: Long, count: Int): List<Event> {
-        val principal = principal()
         return repository
             .findAllByAuthorIdAndIdGreaterThan(authorId, id, Sort.by(Sort.Direction.ASC, "id"))
             // just for simplicity: use normal limiting in production
             .limit(minOf(maxLoadSize, count).toLong())
-            .map { it.toDto(principal.id) }
+            .map { eventEntityToDtoMapper(it) }
             .collect(Collectors.toList())
             .reversed()
     }
@@ -115,7 +110,7 @@ class EventService(
                     attachment = AttachmentEmbeddable.fromDto(dto.attachment),
                     link = dto.link,
                 ).also(repository::save)
-            }.toDto(principal.id)
+            }.let { eventEntityToDtoMapper(it) }
     }
 
     fun removeById(id: Long) {
@@ -140,7 +135,7 @@ class EventService(
                 it.copy(likeOwnerIds = it.likeOwnerIds + principal.id)
             }
             .also(repository::save)
-            .toDto(principal.id)
+            .let { eventEntityToDtoMapper(it) }
     }
 
     fun unlikeById(id: Long): Event {
@@ -152,7 +147,7 @@ class EventService(
                 it.copy(likeOwnerIds = it.likeOwnerIds - principal.id)
             }
             .also(repository::save)
-            .toDto(principal.id)
+            .let { eventEntityToDtoMapper(it) }
     }
 
     fun participateById(id: Long): Event {
@@ -163,7 +158,7 @@ class EventService(
             .apply {
                 participantsIds.add(principal.id)
             }
-            .toDto(principal.id)
+            .let { eventEntityToDtoMapper(it) }
     }
 
     fun unparticipateById(id: Long): Event {
@@ -174,6 +169,6 @@ class EventService(
             .apply {
                 participantsIds.remove(principal.id)
             }
-            .toDto(principal.id)
+            .let { eventEntityToDtoMapper(it) }
     }
 }

@@ -15,17 +15,13 @@ import ru.netology.nework.repository.JobRepository
 class JobService(
     private val repository: JobRepository,
 ) {
-    companion object {
-        const val maxLoadSize = 100
-    }
 
     fun getAllMy(): List<Job> = getAllByUserId(principal().id)
 
     fun getAllByUserId(userId: Long = principal().id): List<Job> {
-        val principal = principal()
         return repository
             .findAllByUserId(userId, Sort.by(Sort.Direction.DESC, "start"))
-            .map { it.toDto(principal.id) }
+            .map { it.toDto() }
     }
 
     fun save(dto: Job): Job {
@@ -39,10 +35,10 @@ class JobService(
             }
             .let { JobEntity.fromDto(dto, principal.id) }
             .let(repository::save)
-            .toDto(principal.id)
+            .toDto()
     }
 
-    fun removeById(id: Long): Unit {
+    fun removeById(id: Long) {
         val principal = principal()
         repository.findById(id)
             .orElseThrow(::NotFoundException)

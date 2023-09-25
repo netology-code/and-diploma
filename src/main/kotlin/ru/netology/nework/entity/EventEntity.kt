@@ -1,9 +1,18 @@
 package ru.netology.nework.entity
 
+import jakarta.persistence.Column
+import jakarta.persistence.ElementCollection
+import jakarta.persistence.Embedded
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
 import ru.netology.nework.dto.Event
 import ru.netology.nework.enumeration.EventType
 import java.time.Instant
-import javax.persistence.*
 
 @Entity
 data class EventEntity(
@@ -17,8 +26,8 @@ data class EventEntity(
     /**
      * Дата и время проведения
      */
-    val datetime: Instant?,
-    val published: Instant?,
+    val datetime: Instant,
+    val published: Instant,
     /**
      * Координаты проведения
      */
@@ -49,24 +58,6 @@ data class EventEntity(
     val attachment: AttachmentEmbeddable? = null,
     val link: String? = null,
 ) {
-    fun toDto(myId: Long) = Event(
-        id = id,
-        authorId = author.id,
-        author = author.name,
-        authorAvatar = author.avatar,
-        content = content,
-        datetime = datetime,
-        published = published,
-        coords = coords?.toCoordinates(),
-        type = type,
-        likeOwnerIds = likeOwnerIds,
-        likedByMe = likeOwnerIds.contains(myId),
-        speakerIds = speakerIds,
-        participantsIds = participantsIds,
-        participatedByMe = participantsIds.contains(myId),
-        attachment = attachment?.toDto(),
-        link = link,
-    )
 
     companion object {
         fun fromDto(dto: Event) = EventEntity(

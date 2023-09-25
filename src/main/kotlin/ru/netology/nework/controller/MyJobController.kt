@@ -1,13 +1,15 @@
 package ru.netology.nework.controller
 
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import ru.netology.nework.dto.Job
 import ru.netology.nework.dto.Post
 import ru.netology.nework.service.JobService
 
+@Tag(name = "MyJob")
 @RestController
-@RequestMapping("/api/my/jobs", "/api/slow/my/jobs")
+@RequestMapping("/api/my/jobs")
 class MyJobController(private val service: JobService) {
     @GetMapping
     fun getAll() = service.getAllMy()

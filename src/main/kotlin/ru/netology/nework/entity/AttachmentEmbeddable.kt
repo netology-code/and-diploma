@@ -1,16 +1,16 @@
 package ru.netology.nework.entity
 
+import jakarta.persistence.Embeddable
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import ru.netology.nework.dto.Attachment
 import ru.netology.nework.enumeration.AttachmentType
-import javax.persistence.Embeddable
-import javax.persistence.EnumType
-import javax.persistence.Enumerated
 
 @Embeddable
 data class AttachmentEmbeddable(
-    var url: String,
+    val url: String,
     @Enumerated(EnumType.STRING)
-    var type: AttachmentType,
+    val type: AttachmentType,
 ) {
     fun toDto() = Attachment(url, type)
 

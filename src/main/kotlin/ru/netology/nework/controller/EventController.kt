@@ -1,12 +1,14 @@
 package ru.netology.nework.controller
 
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import ru.netology.nework.dto.Event
 import ru.netology.nework.service.EventService
 
+@Tag(name = "Events")
 @RestController
-@RequestMapping("/api/events", "/api/slow/events")
+@RequestMapping("/api/events")
 class EventController(private val service: EventService) {
     @GetMapping
     fun getAll() = service.getAll()

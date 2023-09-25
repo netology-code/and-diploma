@@ -1,12 +1,12 @@
 package ru.netology.nework.entity
 
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.ManyToOne
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
 
 @Entity
 data class TokenEntity(
-    @Id var token: String,
+    @Id val token: String,
     @ManyToOne
-    var user: UserEntity,
+    val user: UserEntity,
 )

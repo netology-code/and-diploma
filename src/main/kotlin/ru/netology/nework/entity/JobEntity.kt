@@ -1,46 +1,59 @@
 package ru.netology.nework.entity
 
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
 import ru.netology.nework.dto.Job
-import javax.persistence.*
+import java.time.Instant
 
 @Entity
 data class JobEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
+    val id: Long,
     @ManyToOne
-    var user: UserEntity,
+    val user: UserEntity,
     /**
      * Название компании
      */
     @Column(columnDefinition = "TEXT")
-    var name: String,
+    val name: String,
     @Column(columnDefinition = "TEXT")
-    var position: String,
+    val position: String,
     /**
      * Дата и время начала работы
      */
-    var start: Long,
+    val start: Instant,
     /**
      * Дата и время окончания работы
      */
-    var finish: Long? = null,
+    val finish: Instant? = null,
     /**
      * Ссылка на веб-сайт организации
      */
-    var link: String? = null,
+    val link: String? = null,
 ) {
-    fun toDto(myId: Long) = Job(id, name, position, start, finish, link)
+    fun toDto() = Job(
+        id = id,
+        name = name,
+        position = position,
+        start = start,
+        finish = finish,
+        link = link
+    )
 
     companion object {
         fun fromDto(dto: Job, myId: Long) = JobEntity(
-            dto.id,
-            UserEntity(myId),
-            dto.name,
-            dto.position,
-            dto.start,
-            dto.finish,
-            dto.link,
+            id = dto.id,
+            user = UserEntity(myId),
+            name = dto.name,
+            position = dto.position,
+            start = dto.start,
+            finish = dto.finish,
+            link = dto.link,
         )
     }
 }

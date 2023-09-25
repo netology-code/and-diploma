@@ -1,56 +1,47 @@
 package ru.netology.nework.entity
 
+import jakarta.persistence.Column
+import jakarta.persistence.ElementCollection
+import jakarta.persistence.Embedded
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
 import ru.netology.nework.dto.Post
 import java.time.Instant
-import javax.persistence.*
 
 @Entity
 data class PostEntity(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
+    val id: Long,
     @ManyToOne
-    var author: UserEntity,
+    val author: UserEntity,
     @Column(columnDefinition = "TEXT")
-    var content: String,
-    var published: Instant,
+    val content: String,
+    val published: Instant,
     /**
      * Координаты
      */
     @Embedded
-    var coords: CoordinatesEmbeddable? = null,
+    val coords: CoordinatesEmbeddable? = null,
     /**
      * Ссылка на связанный ресурс, например, событие (/events/{id}) или пользователя (/users/{id})
      */
-    var link: String? = null,
+    val link: String? = null,
     /**
      * Id'шники тех людей/компаний, которые упоминаются в посте (чтобы можно было перейти в их профили)
      */
     @ElementCollection
-    var mentionIds: MutableSet<Long> = mutableSetOf(),
+    val mentionIds: MutableSet<Long> = mutableSetOf(),
     /**
      * Id'шники залайкавших
      */
     @ElementCollection
-    var likeOwnerIds: MutableSet<Long> = mutableSetOf(),
+    val likeOwnerIds: MutableSet<Long> = mutableSetOf(),
     @Embedded
-    var attachment: AttachmentEmbeddable? = null,
+    val attachment: AttachmentEmbeddable? = null,
 ) {
-
-    fun toDto(myId: Long) = Post(
-        id = id,
-        authorId = author.id,
-        author = author.name,
-        authorAvatar = author.avatar,
-        content = content,
-        published = published,
-        coords = coords?.toCoordinates(),
-        link = link,
-        mentionIds = mentionIds,
-        mentionedMe = mentionIds.contains(myId),
-        likeOwnerIds = likeOwnerIds,
-        likedByMe = likeOwnerIds.contains(myId),
-        attachment = attachment?.toDto()
-    )
 
     companion object {
         fun fromDto(dto: Post) = PostEntity(

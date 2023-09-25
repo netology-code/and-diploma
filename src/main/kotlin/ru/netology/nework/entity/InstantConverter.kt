@@ -1,8 +1,8 @@
 package ru.netology.nework.entity
 
+import jakarta.persistence.AttributeConverter
+import jakarta.persistence.Converter
 import java.time.Instant
-import javax.persistence.AttributeConverter
-import javax.persistence.Converter
 
 @Converter(autoApply = true)
 class InstantConverter : AttributeConverter<Instant, Long> {

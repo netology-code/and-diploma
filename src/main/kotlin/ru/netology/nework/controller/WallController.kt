@@ -1,11 +1,13 @@
 package ru.netology.nework.controller
 
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import ru.netology.nework.service.PostService
 
+@Tag(name = "Wall", description = "Посты одного юзера")
 @RestController
-@RequestMapping("/api/{authorId}/wall", "/api/slow/{authorId}/wall")
+@RequestMapping("/api/{authorId}/wall")
 class WallController(private val service: PostService) {
     @GetMapping
     fun getAll(@PathVariable authorId: Long) = service.getAllByAuthorId(authorId)

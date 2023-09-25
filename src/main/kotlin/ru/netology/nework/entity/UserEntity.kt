@@ -1,20 +1,25 @@
 package ru.netology.nework.entity
 
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import ru.netology.nework.dto.User
-import javax.persistence.*
+import ru.netology.nework.dto.UserPreview
 import ru.netology.nework.dto.UserResponse
 
 @Entity
 data class UserEntity(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Long,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long,
     @Column(unique = true)
-    var login: String,
-    var pass: String,
-    var name: String,
-    var avatar: String? = null,
+    val login: String,
+    val pass: String,
+    val name: String,
+    val avatar: String? = null,
 ) : UserDetails {
     constructor(id: Long) : this(id, "", "", "", "")
 
@@ -29,4 +34,6 @@ data class UserEntity(
     fun toDto() = User(id, login, name, avatar, authorities.map(GrantedAuthority::getAuthority))
 
     fun toResponse() = UserResponse(id, login, name, avatar)
+
+    fun toPreview() = UserPreview(name = name, avatar = avatar)
 }

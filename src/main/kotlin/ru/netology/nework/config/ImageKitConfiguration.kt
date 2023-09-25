@@ -10,7 +10,7 @@ class ImageKitConfiguration {
 
     @Bean
     fun imageKit(): Lazy<ImageKit> =
-        Lazy {
+        Lazy.of {
             ImageKit.getInstance()
                 .apply {
                     config = io.imagekit.sdk.config.Configuration(

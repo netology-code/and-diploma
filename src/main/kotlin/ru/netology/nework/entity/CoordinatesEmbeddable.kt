@@ -1,7 +1,7 @@
 package ru.netology.nework.entity
 
+import jakarta.persistence.Embeddable
 import ru.netology.nework.dto.Coordinates
-import javax.persistence.Embeddable
 
 @Embeddable
 data class CoordinatesEmbeddable(
