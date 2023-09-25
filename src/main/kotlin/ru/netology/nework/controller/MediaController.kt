@@ -1,5 +1,7 @@
 package ru.netology.nework.controller
 
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.MediaType
 import org.springframework.security.access.prepost.PreAuthorize
@@ -14,6 +16,9 @@ import ru.netology.nework.service.MediaService
 @RestController
 @RequestMapping("/api/media")
 class MediaController(private val service: MediaService) {
+    @ApiResponse(responseCode = "200")
+    @ApiResponse(responseCode = "403", content = [Content()], description = "Нужно авторизоваться")
+    @ApiResponse(responseCode = "415", content = [Content()], description = "Неправильный формат файла")
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     @PreAuthorize("hasRole('USER')")
     fun save(@RequestParam file: MultipartFile) = service.save(file)
