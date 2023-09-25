@@ -15,6 +15,7 @@ import ru.netology.nework.entity.TokenEntity
 import ru.netology.nework.entity.UserEntity
 import ru.netology.nework.exception.NotFoundException
 import ru.netology.nework.exception.PasswordNotMatchException
+import ru.netology.nework.exception.UserRegisteredException
 import ru.netology.nework.repository.TokenRepository
 import ru.netology.nework.repository.UserRepository
 import java.security.SecureRandom
@@ -32,6 +33,10 @@ class UserService(
         .map(UserEntity::toResponse)
 
     fun register(login: String, pass: String, name: String, file: MultipartFile?): Token {
+        if (userRepository.findByLogin(login) != null) {
+            throw UserRegisteredException()
+        }
+
         val avatar = file?.let {
             mediaService.save(it)
         }
