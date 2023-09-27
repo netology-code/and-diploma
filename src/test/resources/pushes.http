@@ -1,0 +1,8 @@
+POST http://localhost:9999/api/pushes?token=<put your token here>
+Content-Type: application/json
+
+{
+  "recipientId": null,
+  "content": "Wow!"
+}
+

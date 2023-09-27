@@ -116,7 +116,8 @@ class EventService(
     fun removeById(id: Long) {
         val principal = principal()
         repository.findById(id)
-            .map {
+            .orElseThrow(::NotFoundException)
+            .let {
                 if (it.author.id != principal.id) {
                     throw PermissionDeniedException()
                 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import ru.netology.nework.dto.Job
 import ru.netology.nework.entity.JobEntity
+import ru.netology.nework.exception.NotFoundException
 import ru.netology.nework.exception.PermissionDeniedException
 import ru.netology.nework.extensions.principal
 import ru.netology.nework.repository.JobRepository
@@ -40,7 +41,8 @@ class JobService(
     fun removeById(id: Long) {
         val principal = principal()
         repository.findById(id)
-            .map {
+            .orElseThrow(::NotFoundException)
+            .let {
                 if (it.user.id != principal.id) {
                     throw PermissionDeniedException()
                 }
