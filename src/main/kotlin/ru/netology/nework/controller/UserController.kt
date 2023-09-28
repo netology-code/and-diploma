@@ -1,7 +1,9 @@
 package ru.netology.nework.controller
 
+import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
@@ -14,12 +16,14 @@ import ru.netology.nework.service.UserService
 @RestController
 @RequestMapping("/api/users")
 class UserController(private val service: UserService) {
+    @Operation(security = [SecurityRequirement(name = "Api-Key")])
     @GetMapping
     fun getAll(): List<UserResponse> = service.getAll()
 
     @ApiResponse(responseCode = "200")
     @ApiResponse(responseCode = "404", content = [Content()], description = "Юзер не найден")
     @GetMapping("/{id:\\d+}")
+    @Operation(security = [SecurityRequirement(name = "Api-Key")])
     fun getById(@PathVariable id: Long): UserResponse = service.getById(id)
 
     @ApiResponse(responseCode = "200")
@@ -29,6 +33,7 @@ class UserController(private val service: UserService) {
         "/registration",
         consumes = [MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE]
     )
+    @Operation(security = [SecurityRequirement(name = "Api-Key")])
     fun register(
         @RequestParam login: String,
         @RequestParam pass: String,
@@ -40,6 +45,7 @@ class UserController(private val service: UserService) {
     @ApiResponse(responseCode = "400", content = [Content()], description = "Неправильный пароль")
     @ApiResponse(responseCode = "404", content = [Content()], description = "Юзер незарегистрирован")
     @PostMapping("/authentication")
+    @Operation(security = [SecurityRequirement(name = "Api-Key")])
     fun login(@RequestParam login: String, @RequestParam pass: String): Token =
         service.login(login, pass)
 }
