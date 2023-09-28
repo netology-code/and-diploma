@@ -12,7 +12,7 @@
 
 Всё API, которое предоставляет сервер, с примерами вызовов описано на странице [swagger](http://94.228.125.136:8080/swagger-ui/index.html).
 
-Для доступа ко всем запросам вам понадобится ключ, который нужно прикладывать к каждому запросу в заголовок Api-Key. Данный ключ вы получите в личном кабинете. Пожалуйста, не выкладывайте ключ на Github, добавьте его в .gitignore по аналогии с maps.properties.
+Для доступа ко всем запросам вам понадобится ключ, который нужно прикладывать к каждому запросу в заголовок Api-Key. Данный ключ вы получите в личном кабинете. Пожалуйста, не выкладывайте ключ на Github, добавьте его в .gitignore по аналогии с [maps.properties](https://github.com/netology-code/andad-code/blob/master/08_maps/android/.gitignore#L26).
 
 Дизайн доступен в [figma](https://www.figma.com/file/8z1sV6KIf6Sc1y02TrY2XS/Nmedia?type=design&node-id=0%3A1&mode=design&t=P0JIwE4Xj28DOx61-1).
 
