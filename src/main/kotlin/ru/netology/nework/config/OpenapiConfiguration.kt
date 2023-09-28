@@ -17,9 +17,10 @@ class OpenapiConfiguration {
                 .addSecuritySchemes(
                     "Authorization",
                     SecurityScheme()
-                        .type(SecurityScheme.Type.HTTP)
+                        .type(SecurityScheme.Type.APIKEY)
                         .bearerFormat("string")
-                        .scheme("bearer")
+                        .name("Authorization")
+                        .`in`(SecurityScheme.In.HEADER)
                         .description("Токен авторизации")
                 )
                 .addSecuritySchemes(
