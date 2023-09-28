@@ -10,7 +10,7 @@
 
 Создать android-приложение на языкe Kotlin с использованием библиотек Kotlinx Coroutines, Retrofit, Dagger Hilt.
 
-Всё API, которое предоставляет сервер, с примерами вызовов описано на странице [swagger](http://94.228.125.136:8080/swagger-ui/).
+Всё API, которое предоставляет сервер, с примерами вызовов описано на странице [swagger](http://94.228.125.136:8080/swagger-ui/index.html).
 
 Дизайн доступен в [figma](https://www.figma.com/file/8z1sV6KIf6Sc1y02TrY2XS/Nmedia?type=design&node-id=0%3A1&mode=design&t=P0JIwE4Xj28DOx61-1).
 
