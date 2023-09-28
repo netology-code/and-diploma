@@ -47,4 +47,4 @@ nbdist/
 ### Gradle ###
 !gradle/wrapper/gradle-wrapper.jar
 
-upload
+src/main/resources/token.properties

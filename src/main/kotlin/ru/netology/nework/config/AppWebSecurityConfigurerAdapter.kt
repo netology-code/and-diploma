@@ -14,6 +14,7 @@ import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import ru.netology.nework.dto.AnonymousUser
+import ru.netology.nework.filter.AuthApiTokenFilter
 import ru.netology.nework.filter.AuthTokenFilter
 import ru.netology.nework.service.UserService
 
@@ -24,6 +25,9 @@ class AppWebSecurityConfigurerAdapter {
     @Autowired
     @Lazy
     lateinit var userService: UserService
+
+    @Autowired
+    lateinit var authApiTokenFilter: AuthApiTokenFilter
 
     @Bean
     fun passwordEncoder(): PasswordEncoder = SCryptPasswordEncoder.defaultsForSpringSecurity_v5_8()
@@ -43,6 +47,7 @@ class AppWebSecurityConfigurerAdapter {
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
+            .addFilterBefore(authApiTokenFilter, BasicAuthenticationFilter::class.java)
             .addFilterAfter(AuthTokenFilter(userService), BasicAuthenticationFilter::class.java)
             .anonymous {
                 it.principal(AnonymousUser).authorities(*AnonymousUser.authorities.toTypedArray())
