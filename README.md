@@ -14,6 +14,10 @@
 
 Для доступа ко всем запросам вам понадобится ключ, который нужно прикладывать к каждому запросу в заголовок Api-Key. Данный ключ вы получите в личном кабинете. Пожалуйста, не выкладывайте ключ на Github, добавьте его в .gitignore по аналогии с [maps.properties](https://github.com/netology-code/andad-code/blob/master/08_maps/android/.gitignore#L26).
 
+Для тестирования запросов вводить Api-Key и токен авторизации следует в отдельном окне
+
+![](/pic/api_key_swagger.png)
+
 Дизайн доступен в [figma](https://www.figma.com/file/8z1sV6KIf6Sc1y02TrY2XS/Nmedia?type=design&node-id=0%3A1&mode=design&t=P0JIwE4Xj28DOx61-1).
 
 В результате выполнения этого задания вы:
