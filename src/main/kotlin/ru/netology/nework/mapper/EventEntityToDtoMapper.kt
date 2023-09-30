@@ -1,13 +1,15 @@
 package ru.netology.nework.mapper
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 import ru.netology.nework.dto.Event
-import ru.netology.nework.dto.Post
 import ru.netology.nework.entity.EventEntity
 import ru.netology.nework.extensions.principal
 import ru.netology.nework.repository.UserRepository
 import ru.netology.nework.utils.getOrNull
 
-class EventEntityToDtoMapper(
+@Component
+class EventEntityToDtoMapper @Autowired constructor(
     private val userRepository: UserRepository,
 ) {
     operator fun invoke(eventEntity: EventEntity): Event = with(eventEntity) {

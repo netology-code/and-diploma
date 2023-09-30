@@ -1,14 +1,19 @@
 package ru.netology.nework.mapper
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 import ru.netology.nework.dto.Post
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.extensions.principal
+import ru.netology.nework.repository.JobRepository
 import ru.netology.nework.repository.UserRepository
 import ru.netology.nework.utils.getOrNull
 
-class PostEntityToDtoMapper(
+@Component
+class PostEntityToDtoMapper @Autowired constructor(
     private val userRepository: UserRepository,
-    ) {
+    private val jobRepository: JobRepository,
+) {
     operator fun invoke(postEntity: PostEntity): Post = with(postEntity) {
         val principal = principal()
 
@@ -29,6 +34,8 @@ class PostEntityToDtoMapper(
             authorId = author.id,
             author = author.name,
             authorAvatar = author.avatar,
+            authorJob = jobRepository.findFirstByUserIdOrderByIdDesc(author.id)
+                .getOrNull()?.name,
             content = content,
             published = published,
             coords = coords?.toCoordinates(),

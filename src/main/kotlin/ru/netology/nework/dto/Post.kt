@@ -7,6 +7,7 @@ data class Post(
     val id: Long = 0,
     val authorId: Long = 0,
     val author: String = "",
+    val authorJob: String? = null,
     val authorAvatar: String? = null,
     @NotBlank
     val content: String,
