@@ -1,13 +1,16 @@
 package ru.netology.nework.entity
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.ElementCollection
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToMany
 import ru.netology.nework.dto.Post
 import java.time.Instant
 
@@ -33,14 +36,21 @@ data class PostEntity(
      * Id'шники тех людей/компаний, которые упоминаются в посте (чтобы можно было перейти в их профили)
      */
     @ElementCollection
-    val mentionIds: MutableSet<Long> = mutableSetOf(),
+    val mentionIds: Set<Long> = setOf(),
     /**
      * Id'шники залайкавших
      */
     @ElementCollection
-    val likeOwnerIds: MutableSet<Long> = mutableSetOf(),
+    val likeOwnerIds: Set<Long> = setOf(),
     @Embedded
     val attachment: AttachmentEmbeddable? = null,
+    @OneToMany(
+        mappedBy = "post",
+        cascade = [CascadeType.ALL],
+        orphanRemoval = true,
+        fetch = FetchType.LAZY,
+    )
+    val comments: List<CommentEntity> = emptyList(),
 ) {
 
     companion object {

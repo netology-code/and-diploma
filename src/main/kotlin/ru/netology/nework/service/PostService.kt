@@ -14,6 +14,7 @@ import ru.netology.nework.extensions.principal
 import ru.netology.nework.mapper.PostEntityToDtoMapper
 import ru.netology.nework.repository.PostRepository
 import ru.netology.nework.repository.UserRepository
+import ru.netology.nework.utils.getOrNull
 import java.time.Instant
 import java.util.stream.Collectors
 
@@ -60,7 +61,13 @@ class PostService(
 
     fun getLatest(count: Int): List<Post> {
         return postRepository
-            .findAll(PageRequest.of(0, minOf(maxLoadSize, count), Sort.by(Sort.Direction.DESC, "id")))
+            .findAll(
+                PageRequest.of(
+                    0,
+                    minOf(maxLoadSize, count),
+                    Sort.by(Sort.Direction.DESC, "id")
+                )
+            )
             .content
             .map { postEntityToDtoMapper(it) }
     }
@@ -169,13 +176,12 @@ class PostService(
     fun removeById(id: Long) {
         val principal = principal()
         postRepository.findById(id)
-            .orElseThrow(::NotFoundException)
-            .let {
+            .getOrNull()
+            ?.let {
                 if (it.author.id != principal.id) {
                     throw PermissionDeniedException()
                 }
                 postRepository.delete(it)
-                it
             }
     }
 
@@ -184,9 +190,10 @@ class PostService(
         return postRepository
             .findById(id)
             .orElseThrow(::NotFoundException)
-            .apply {
-                likeOwnerIds.add(principal.id)
+            .run {
+                copy(likeOwnerIds = likeOwnerIds + principal.id)
             }
+            .also(postRepository::save)
             .let { postEntityToDtoMapper(it) }
     }
 
@@ -195,9 +202,10 @@ class PostService(
         return postRepository
             .findById(id)
             .orElseThrow(::NotFoundException)
-            .apply {
-                likeOwnerIds.remove(principal.id)
+            .run {
+                copy(likeOwnerIds = likeOwnerIds - principal.id)
             }
+            .also(postRepository::save)
             .let { postEntityToDtoMapper(it) }
     }
 }
