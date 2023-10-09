@@ -4,11 +4,13 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import ru.netology.nework.dto.Comment
 import ru.netology.nework.service.CommentService
 
+@Tag(name = "Comments")
 @RestController
 @RequestMapping("/api/posts/{postId}/comments")
 class CommentController(private val service: CommentService) {
