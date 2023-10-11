@@ -42,7 +42,7 @@
 
 ------
 
-#### Рекомендации по использованию инструментов / дополнительных материалов
+### Рекомендации по использованию инструментов / дополнительных материалов
 
 - При использовании пакета java.time обязательно включите [desugaring](https://developer.android.com/studio/write/java8-support#library-desugaring), чтобы на версиях ниже 26 приложение не падало.
 - Для создания сетевого слоя допускается использовать автогенерацию. Например, [плагин](https://plugins.jetbrains.com/plugin/9960-json-to-kotlin-class-jsontokotlinclass-) для Android Studio.
@@ -307,7 +307,7 @@
 
 ------
 
-#### Рекомендации по использованию инструментов / дополнительных материалов
+### Рекомендации по использованию инструментов / дополнительных материалов
 
 - При использовании пакета java.time обязательно включите [desugaring](https://developer.android.com/studio/write/java8-support#library-desugaring), чтобы на версиях ниже 26 приложение не падало.
 - Для создания сетевого слоя допускается использовать автогенерацию. Например, [плагин](https://plugins.jetbrains.com/plugin/9960-json-to-kotlin-class-jsontokotlinclass-) для Android Studio.
