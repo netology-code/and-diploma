@@ -37,6 +37,7 @@ class PostController(private val service: PostService) {
     fun getBefore(@PathVariable id: Long, @RequestParam count: Int) = service.getBefore(id, count)
 
     @GetMapping("/{id}/after")
+    @Operation(security = [SecurityRequirement(name = "Api-Key")])
     fun getAfter(@PathVariable id: Long, @RequestParam count: Int) = service.getAfter(id, count)
 
     @ApiResponse(responseCode = "200")
