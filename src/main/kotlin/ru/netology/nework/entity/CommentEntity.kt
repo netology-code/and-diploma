@@ -1,6 +1,5 @@
 package ru.netology.nework.entity
 
-import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.ElementCollection
 import jakarta.persistence.Entity
@@ -15,7 +14,7 @@ import java.time.Instant
 @Entity
 data class CommentEntity(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long,
-    @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     val post: PostEntity,
     @Column(columnDefinition = "TEXT")
     val content: String,

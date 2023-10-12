@@ -32,25 +32,31 @@ class CommentService(
 
     fun save(dto: Comment): Comment {
         val principal = principal()
-        return commentRepository
-            .findById(dto.id)
-            .orElse(
-                CommentEntity.fromDto(
-                    dto.copy(
-                        published = Instant.now()
-                    ),
-                    post = postRepository.getReferenceById(dto.postId)
-                ).copy(author = userRepository.getReferenceById(principal.id))
-            )
-            .let {
-                if (it.author.id != principal.id) {
-                    throw PermissionDeniedException()
-                }
+        return postRepository.findById(dto.postId)
+            .orElseThrow {
+                NotFoundException()
+            }
+            .let { post ->
+                commentRepository
+                    .findById(dto.id)
+                    .orElse(
+                        CommentEntity.fromDto(
+                            dto.copy(
+                                published = Instant.now()
+                            ),
+                            post = post
+                        ).copy(author = userRepository.getReferenceById(principal.id))
+                    )
+                    .let {
+                        if (it.author.id != principal.id) {
+                            throw PermissionDeniedException()
+                        }
 
-                val entity = if (it.id == 0L) it else it.copy(content = dto.content)
-                commentRepository.save(entity)
-                entity
-            }.toDto()
+                        val entity = if (it.id == 0L) it else it.copy(content = dto.content)
+                        commentRepository.save(entity)
+                        entity
+                    }.toDto()
+            }
     }
 
     fun removeById(id: Long) {

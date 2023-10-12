@@ -20,6 +20,7 @@ class CommentController(private val service: CommentService) {
 
     @ApiResponse(responseCode = "200")
     @ApiResponse(responseCode = "403", content = [Content()], description = "Нужно авторизоваться")
+    @ApiResponse(responseCode = "404", content = [Content()], description = "Пост не найден")
     @PreAuthorize("hasRole('USER')")
     @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     @PostMapping
