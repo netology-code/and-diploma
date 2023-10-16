@@ -33,7 +33,7 @@ class UserService(
         .map(UserEntity::toResponse)
 
     fun register(login: String, pass: String, name: String, file: MultipartFile?): Token {
-        if (userRepository.findByLogin(login) != null) {
+        if (userRepository.findByLoginIgnoreCase(login) != null) {
             throw UserRegisteredException()
         }
 
@@ -57,7 +57,7 @@ class UserService(
     }
 
     fun login(login: String, pass: String): Token = userRepository
-        .findByLogin(login)
+        .findByLoginIgnoreCase(login)
         ?.let { user ->
             if (!passwordEncoder.matches(pass, user.password)) {
                 throw PasswordNotMatchException()
@@ -73,7 +73,7 @@ class UserService(
         ?.toDto()
 
     override fun loadUserByUsername(username: String?): UserDetails =
-        userRepository.findByLogin(username) ?: throw UsernameNotFoundException(username)
+        userRepository.findByLoginIgnoreCase(username) ?: throw UsernameNotFoundException(username)
 
     private fun generateToken(): String = ByteArray(128).apply {
         SecureRandom().nextBytes(this)
