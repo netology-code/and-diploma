@@ -2,7 +2,6 @@ package ru.netology.nework.service
 
 import io.imagekit.sdk.ImageKit
 import io.imagekit.sdk.models.FileCreateRequest
-import java.util.UUID
 import org.apache.tika.Tika
 import org.springframework.data.util.Lazy
 import org.springframework.stereotype.Service
@@ -10,6 +9,7 @@ import org.springframework.util.MimeTypeUtils
 import org.springframework.web.multipart.MultipartFile
 import ru.netology.nework.dto.Media
 import ru.netology.nework.exception.BadContentTypeException
+import java.util.UUID
 
 @Service
 class MediaService(
@@ -26,7 +26,9 @@ class MediaService(
                         when (mediaType) {
                             MimeTypeUtils.IMAGE_JPEG_VALUE -> "jpg"
                             MimeTypeUtils.IMAGE_PNG_VALUE -> "png"
+                            "audio/mp3",
                             "audio/mpeg" -> "mp3"
+                            "video/mp4",
                             "video/quicktime", 
                             "application/mp4" -> "mp4"
                             else -> throw BadContentTypeException()
