@@ -5,12 +5,14 @@ import org.springframework.stereotype.Component
 import ru.netology.nework.dto.Event
 import ru.netology.nework.entity.EventEntity
 import ru.netology.nework.extensions.principal
+import ru.netology.nework.repository.JobRepository
 import ru.netology.nework.repository.UserRepository
 import ru.netology.nework.utils.getOrNull
 
 @Component
 class EventEntityToDtoMapper @Autowired constructor(
     private val userRepository: UserRepository,
+    private val jobRepository: JobRepository,
 ) {
     operator fun invoke(eventEntity: EventEntity): Event = with(eventEntity) {
         val principal = principal()
@@ -45,6 +47,8 @@ class EventEntityToDtoMapper @Autowired constructor(
             attachment = attachment?.toDto(),
             link = link,
             users = users,
+            authorJob = jobRepository.findFirstByUserIdOrderByIdDesc(author.id)
+                .getOrNull()?.name,
         )
     }
 }
