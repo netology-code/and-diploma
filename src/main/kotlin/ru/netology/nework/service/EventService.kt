@@ -13,6 +13,7 @@ import ru.netology.nework.exception.PermissionDeniedException
 import ru.netology.nework.extensions.principal
 import ru.netology.nework.mapper.EventEntityToDtoMapper
 import ru.netology.nework.repository.EventRepository
+import ru.netology.nework.repository.UserRepository
 import java.time.Instant
 import java.util.stream.Collectors
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors
 class EventService(
     private val repository: EventRepository,
     private val eventEntityToDtoMapper: EventEntityToDtoMapper,
+    private val userRepository: UserRepository,
 ) {
     companion object {
         const val maxLoadSize = 100
@@ -90,11 +92,9 @@ class EventService(
                 EventEntity.fromDto(
                     dto.copy(
                         authorId = principal.id,
-                        author = principal.name,
-                        authorAvatar = principal.avatar,
-                        published = Instant.now()
+                        published = Instant.now(),
                     )
-                )
+                ).copy(author = userRepository.getReferenceById(principal.id))
             )
             .let {
                 if (it.author.id != principal.id) {
