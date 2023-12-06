@@ -78,7 +78,7 @@
 
 ![](/pic/api_key_swagger.png)
 
-Дизайн доступен в [figma](https://www.figma.com/file/8z1sV6KIf6Sc1y02TrY2XS/Nmedia?type=design&node-id=0%3A1&mode=design&t=P0JIwE4Xj28DOx61-1).
+Дизайн доступен в [figma](https://www.figma.com/file/Yi3O3UY3FKu8Mdt3t1lyCc/Nmedia?type=design&node-id=0%3A1&mode=design&t=sWy9G1DAeHLJ2hqJ-1).
 
 #### Требования к интерфейсу
 
