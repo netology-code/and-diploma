@@ -11,4 +11,5 @@ data class Comment(
     val content: String,
     val published: Instant = Instant.now(),
     val likeOwnerIds: Set<Long> = emptySet(),
+    val likedByMe: Boolean = false,
 )

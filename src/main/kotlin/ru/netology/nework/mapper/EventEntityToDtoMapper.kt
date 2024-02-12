@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import ru.netology.nework.dto.Event
 import ru.netology.nework.entity.EventEntity
-import ru.netology.nework.extensions.principal
+import ru.netology.nework.extensions.principalOrNull
 import ru.netology.nework.repository.JobRepository
 import ru.netology.nework.repository.UserRepository
 import ru.netology.nework.utils.getOrNull
@@ -15,9 +15,9 @@ class EventEntityToDtoMapper @Autowired constructor(
     private val jobRepository: JobRepository,
 ) {
     operator fun invoke(eventEntity: EventEntity): Event = with(eventEntity) {
-        val principal = principal()
+        val principal = principalOrNull()
 
-        val myId = principal.id
+        val myId = principal?.id
 
         val allUsers = participantsIds + likeOwnerIds + speakerIds
 

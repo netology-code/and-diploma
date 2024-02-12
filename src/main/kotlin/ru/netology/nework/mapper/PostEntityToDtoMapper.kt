@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import ru.netology.nework.dto.Post
 import ru.netology.nework.entity.PostEntity
-import ru.netology.nework.extensions.principal
+import ru.netology.nework.extensions.principalOrNull
 import ru.netology.nework.repository.JobRepository
 import ru.netology.nework.repository.UserRepository
 import ru.netology.nework.utils.getOrNull
@@ -15,9 +15,9 @@ class PostEntityToDtoMapper @Autowired constructor(
     private val jobRepository: JobRepository,
 ) {
     operator fun invoke(postEntity: PostEntity): Post = with(postEntity) {
-        val principal = principal()
+        val principal = principalOrNull()
 
-        val myId = principal.id
+        val myId = principal?.id
 
         val allUsers = mentionIds + likeOwnerIds
 

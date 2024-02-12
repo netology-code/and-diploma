@@ -8,6 +8,7 @@ import ru.netology.nework.entity.CommentEntity
 import ru.netology.nework.exception.NotFoundException
 import ru.netology.nework.exception.PermissionDeniedException
 import ru.netology.nework.extensions.principal
+import ru.netology.nework.mapper.CommentEntityToDtoMapper
 import ru.netology.nework.repository.CommentRepository
 import ru.netology.nework.repository.PostRepository
 import ru.netology.nework.repository.UserRepository
@@ -17,17 +18,18 @@ import java.time.Instant
 @Service
 @Transactional
 class CommentService(
+    private val commentEntityToDtoMapper: CommentEntityToDtoMapper,
     private val commentRepository: CommentRepository,
     private val postRepository: PostRepository,
     private val userRepository: UserRepository,
 ) {
     fun getAllByPostId(postId: Long): List<Comment> = commentRepository
         .findAllByPostId(postId, Sort.by(Sort.Direction.ASC, "id"))
-        .map { it.toDto() }
+        .map(commentEntityToDtoMapper::invoke)
 
     fun getById(id: Long): Comment = commentRepository
         .findById(id)
-        .map { it.toDto() }
+        .map(commentEntityToDtoMapper::invoke)
         .orElseThrow(::NotFoundException)
 
     fun save(dto: Comment): Comment {
@@ -55,7 +57,8 @@ class CommentService(
                         val entity = if (it.id == 0L) it else it.copy(content = dto.content)
                         commentRepository.save(entity)
                         entity
-                    }.toDto()
+                    }
+                    .let(commentEntityToDtoMapper::invoke)
             }
     }
 
@@ -80,7 +83,7 @@ class CommentService(
                 copy(likeOwnerIds = likeOwnerIds + principal.id)
             }
             .also(commentRepository::save)
-            .toDto()
+            .let(commentEntityToDtoMapper::invoke)
     }
 
     fun unlikeById(id: Long): Comment {
@@ -92,7 +95,7 @@ class CommentService(
                 copy(likeOwnerIds = likeOwnerIds - principal.id)
             }
             .also(commentRepository::save)
-            .toDto()
+            .let(commentEntityToDtoMapper::invoke)
     }
 
     fun removeAllByPostId(postId: Long): Unit = commentRepository

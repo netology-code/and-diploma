@@ -24,16 +24,6 @@ data class CommentEntity(
     @ManyToOne
     val author: UserEntity,
 ) {
-    fun toDto() = Comment(
-        id = id,
-        postId = post.id,
-        author = author.name,
-        authorId = author.id,
-        authorAvatar = author.avatar,
-        content = content,
-        published = published,
-        likeOwnerIds = likeOwnerIds,
-    )
 
     companion object {
         fun fromDto(dto: Comment, post: PostEntity) = CommentEntity(
