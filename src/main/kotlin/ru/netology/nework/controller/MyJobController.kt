@@ -15,7 +15,10 @@ import ru.netology.nework.service.JobService
 @RestController
 @RequestMapping("/api/my/jobs")
 class MyJobController(private val service: JobService) {
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @ApiResponse(responseCode = "200")
+    @ApiResponse(responseCode = "403", content = [Content()], description = "Нужно авторизоваться")
+    @PreAuthorize("hasRole('USER')")
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     @GetMapping
     fun getAll() = service.getAllMy()
 
