@@ -11,6 +11,7 @@ import java.util.stream.Stream
 interface JobRepository : JpaRepository<JobEntity, Long> {
 
     fun findFirstByUserIdOrderByIdDesc(userId: Long): Optional<JobEntity>
+    fun findFirstByUserIdOrderByStartDesc(userId: Long): Optional<JobEntity>
 
     fun findAllByUserId(userId: Long, sort: Sort): List<JobEntity>
     fun findAllByUserId(userId: Long, page: Pageable): Page<JobEntity>

@@ -47,7 +47,7 @@ class EventEntityToDtoMapper @Autowired constructor(
             attachment = attachment?.toDto(),
             link = link,
             users = users,
-            authorJob = jobRepository.findFirstByUserIdOrderByIdDesc(author.id)
+            authorJob = jobRepository.findFirstByUserIdOrderByStartDesc(author.id)
                 .getOrNull()?.name,
         )
     }

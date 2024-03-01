@@ -34,7 +34,7 @@ class PostEntityToDtoMapper @Autowired constructor(
             authorId = author.id,
             author = author.name,
             authorAvatar = author.avatar,
-            authorJob = jobRepository.findFirstByUserIdOrderByIdDesc(author.id)
+            authorJob = jobRepository.findFirstByUserIdOrderByStartDesc(author.id)
                 .getOrNull()?.name,
             content = content,
             published = published,
