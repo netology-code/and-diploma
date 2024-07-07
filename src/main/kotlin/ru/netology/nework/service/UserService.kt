@@ -50,7 +50,7 @@ class UserService(
                 avatar?.url,
             )
         ).let { user ->
-            val token = Token(user.id, generateToken())
+            val token = Token(user.id, generateToken(), user.avatar)
             tokenRepository.save(TokenEntity(token.token, user))
             token
         }
@@ -62,7 +62,7 @@ class UserService(
             if (!passwordEncoder.matches(pass, user.password)) {
                 throw PasswordNotMatchException()
             }
-            val token = Token(user.id, generateToken())
+            val token = Token(user.id, generateToken(), user.avatar)
             tokenRepository.save(TokenEntity(token.token, user))
             token
         } ?: throw NotFoundException()
