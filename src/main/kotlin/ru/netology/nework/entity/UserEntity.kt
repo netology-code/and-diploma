@@ -25,13 +25,16 @@ data class UserEntity(
 
     override fun getUsername(): String = login
     override fun getPassword(): String = pass
-    override fun getAuthorities(): Collection<GrantedAuthority> = listOf(SimpleGrantedAuthority("ROLE_USER"))
+    override fun getAuthorities(): Collection<GrantedAuthority> =
+        listOf(SimpleGrantedAuthority("ROLE_USER"))
+
     override fun isAccountNonExpired(): Boolean = true
     override fun isAccountNonLocked(): Boolean = true
     override fun isCredentialsNonExpired(): Boolean = true
     override fun isEnabled(): Boolean = true
 
-    fun toDto() = User(id, login, name, avatar, authorities.map(GrantedAuthority::getAuthority))
+    fun toDto() =
+        User(id, login, name, avatar, authorities.mapNotNull(GrantedAuthority::getAuthority))
 
     fun toResponse() = UserResponse(id, login, name, avatar)
 

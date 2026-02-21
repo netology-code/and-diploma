@@ -1,12 +1,11 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    id("org.springframework.boot") version "3.1.3"
-    id("io.spring.dependency-management") version "1.1.3"
-    id("org.jetbrains.kotlin.plugin.jpa") version "1.9.10"
-    kotlin("jvm") version "1.9.10"
-    kotlin("plugin.spring") version "1.9.10"
-    id("org.flywaydb.flyway") version "9.22.1"
+    id("org.springframework.boot") version "4.0.3"
+    id("io.spring.dependency-management") version "1.1.7"
+    val kotlinVersion = "2.3.0"
+    id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.spring") version kotlinVersion
+    id("org.flywaydb.flyway") version "12.0.1"
 }
 
 flyway {
@@ -33,29 +32,17 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.github.imagekit-developer:imagekit-java:2.0.1")
-    implementation("org.apache.tika:tika-core:2.2.1")
-    runtimeOnly("org.postgresql:postgresql:42.3.1")
+    implementation("org.apache.tika:tika-core:3.2.3")
+    runtimeOnly("org.postgresql:postgresql:42.7.10")
     runtimeOnly("com.h2database:h2")
     implementation("org.bouncycastle:bctls-jdk15on:1.70")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
-    implementation("org.flywaydb:flyway-core:9.22.1")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+    implementation("org.flywaydb:flyway-core:12.0.1")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.1")
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "17"
-    }
-}
-
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    languageVersion = "1.7"
 }
