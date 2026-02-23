@@ -34,7 +34,6 @@ dependencies {
     implementation("com.github.imagekit-developer:imagekit-java:2.0.1")
     implementation("org.apache.tika:tika-core:3.2.3")
     runtimeOnly("org.postgresql:postgresql:42.7.10")
-    runtimeOnly("com.h2database:h2")
     implementation("org.bouncycastle:bctls-jdk15on:1.70")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

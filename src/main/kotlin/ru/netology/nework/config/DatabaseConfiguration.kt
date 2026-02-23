@@ -13,9 +13,9 @@ class DatabaseConfiguration {
     @Bean
     @Primary
     fun dataSource(
-        @Value("\${SPRING_DATASOURCE_USERNAME:sa}") username: String,
-        @Value("\${SPRING_DATASOURCE_PASSWORD:password}") password: String,
-        @Value("\${SPRING_DATASOURCE_URL:jdbc:h2:mem:testdb}") url: String,
+        @Value("\${SPRING_DATASOURCE_USERNAME}") username: String,
+        @Value("\${SPRING_DATASOURCE_PASSWORD}") password: String,
+        @Value("\${SPRING_DATASOURCE_URL}") url: String,
     ): DataSource =
         DataSourceBuilder
             .create()
