@@ -9,7 +9,7 @@ data class Post(
     val author: String = "",
     val authorJob: String? = null,
     val authorAvatar: String? = null,
-    @NotBlank
+    @field:NotBlank
     val content: String,
     val published: Instant = Instant.now(),
     /**
