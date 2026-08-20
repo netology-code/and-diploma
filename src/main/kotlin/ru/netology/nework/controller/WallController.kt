@@ -14,29 +14,29 @@ import ru.netology.nework.service.PostService
 @RequestMapping("/api/{authorId}/wall")
 class WallController(private val service: PostService) {
     @GetMapping
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getAll(@PathVariable authorId: Long) = service.getAllByAuthorId(authorId)
 
     @ApiResponse(responseCode = "200")
     @ApiResponse(responseCode = "404", content = [Content()], description = "Пост не найден")
     @GetMapping("/{id:\\d+}")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getById(@PathVariable authorId: Long, @PathVariable id: Long) = service.getByAuthorIdAndId(authorId, id)
 
     @GetMapping("/latest")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getLatest(@PathVariable authorId: Long, @RequestParam count: Int) = service.getLatestByAuthorId(authorId, count)
 
     @GetMapping("/{id}/newer")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getNewer(@PathVariable authorId: Long, @PathVariable id: Long) = service.getNewerByAuthorId(authorId, id)
 
     @GetMapping("/{id}/before")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getBefore(@PathVariable authorId: Long, @PathVariable id: Long, @RequestParam count: Int) = service.getBeforeByAuthorId(authorId, id, count)
 
     @GetMapping("/{id}/after")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getAfterByAuthorId(@PathVariable authorId: Long, @PathVariable id: Long, @RequestParam count: Int) = service.getAfterByAuthorId(authorId, id, count)
 
     @ApiResponse(responseCode = "200")

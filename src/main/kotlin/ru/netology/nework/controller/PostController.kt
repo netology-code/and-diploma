@@ -14,30 +14,30 @@ import ru.netology.nework.service.PostService
 @RestController
 @RequestMapping("/api/posts")
 class PostController(private val service: PostService) {
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     @GetMapping
     fun getAll() = service.getAll()
 
     @ApiResponse(responseCode = "200")
     @ApiResponse(responseCode = "404", content = [Content()], description = "Пост не найден")
     @GetMapping("/{id:\\d+}")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getById(@PathVariable id: Long) = service.getById(id)
 
     @GetMapping("/latest")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getLatest(@RequestParam count: Int) = service.getLatest(count)
 
     @GetMapping("/{id}/newer")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getNewer(@PathVariable id: Long) = service.getNewer(id)
 
     @GetMapping("/{id}/before")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getBefore(@PathVariable id: Long, @RequestParam count: Int) = service.getBefore(id, count)
 
     @GetMapping("/{id}/after")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getAfter(@PathVariable id: Long, @RequestParam count: Int) = service.getAfter(id, count)
 
     @ApiResponse(responseCode = "200")

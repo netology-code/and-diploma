@@ -13,27 +13,27 @@ import ru.netology.nework.service.EventService
 @RequestMapping("/api/events")
 class EventController(private val service: EventService) {
     @GetMapping
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getAll() = service.getAll()
 
     @GetMapping("/{id:\\d+}")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getById(@PathVariable id: Long) = service.getById(id)
 
     @GetMapping("/latest")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getLatest(@RequestParam count: Int) = service.getLatest(count)
 
     @GetMapping("/{id}/newer")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getNewer(@PathVariable id: Long) = service.getNewer(id)
 
     @GetMapping("/{id}/before")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getBefore(@PathVariable id: Long, @RequestParam count: Int) = service.getBefore(id, count)
 
     @GetMapping("/{id}/after")
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     fun getAfter(@PathVariable id: Long, @RequestParam count: Int) = service.getAfter(id, count)
 
     @PostMapping

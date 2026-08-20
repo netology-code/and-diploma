@@ -14,7 +14,7 @@ import ru.netology.nework.service.CommentService
 @RestController
 @RequestMapping("/api/posts/{postId}/comments")
 class CommentController(private val service: CommentService) {
-    @Operation(security = [SecurityRequirement(name = "Api-Key")])
+    @Operation(security = [SecurityRequirement(name = "Authorization"), SecurityRequirement(name = "Api-Key")])
     @GetMapping
     fun getAllByPostId(@PathVariable postId: Long): List<Comment> = service.getAllByPostId(postId)
 
